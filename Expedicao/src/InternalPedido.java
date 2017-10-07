@@ -56,9 +56,11 @@ public class InternalPedido extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaItens = new javax.swing.JTable();
         frameFechamento = new javax.swing.JInternalFrame();
-        botaoConfirmarPedido = new javax.swing.JButton();
+        botaoAdicionar = new javax.swing.JButton();
         textoPais = new javax.swing.JTextField();
         labelPais = new javax.swing.JLabel();
+        botaoConfirmarPedido1 = new javax.swing.JButton();
+        botaoExcluir = new javax.swing.JButton();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -80,16 +82,30 @@ public class InternalPedido extends javax.swing.JInternalFrame {
 
         tabelaItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null}
             },
             new String [] {
-                "Item", "Quantidade", "Valor Unitário", "Total"
+                "Item", "Quantidade", "Estoque", " Unitário", "Total"
             }
         ));
         jScrollPane2.setViewportView(tabelaItens);
+        if (tabelaItens.getColumnModel().getColumnCount() > 0) {
+            tabelaItens.getColumnModel().getColumn(0).setMinWidth(300);
+            tabelaItens.getColumnModel().getColumn(0).setPreferredWidth(300);
+            tabelaItens.getColumnModel().getColumn(0).setMaxWidth(300);
+            tabelaItens.getColumnModel().getColumn(1).setMinWidth(80);
+            tabelaItens.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tabelaItens.getColumnModel().getColumn(1).setMaxWidth(80);
+            tabelaItens.getColumnModel().getColumn(2).setMinWidth(80);
+            tabelaItens.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tabelaItens.getColumnModel().getColumn(2).setMaxWidth(80);
+            tabelaItens.getColumnModel().getColumn(3).setMinWidth(80);
+            tabelaItens.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tabelaItens.getColumnModel().getColumn(3).setMaxWidth(80);
+            tabelaItens.getColumnModel().getColumn(4).setMinWidth(80);
+            tabelaItens.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tabelaItens.getColumnModel().getColumn(4).setMaxWidth(80);
+        }
 
         tabFechamento.addTab("Itens de Pedido", jScrollPane2);
 
@@ -108,14 +124,28 @@ public class InternalPedido extends javax.swing.JInternalFrame {
 
         tabFechamento.addTab("Fechamento", frameFechamento);
 
-        botaoConfirmarPedido.setText("Confirmar Pedido");
-        botaoConfirmarPedido.addActionListener(new java.awt.event.ActionListener() {
+        botaoAdicionar.setText("Adicionar");
+        botaoAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoConfirmarPedidoActionPerformed(evt);
+                botaoAdicionarActionPerformed(evt);
             }
         });
 
         labelPais.setText("País");
+
+        botaoConfirmarPedido1.setText("Confirmar Pedido");
+        botaoConfirmarPedido1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfirmarPedido1ActionPerformed(evt);
+            }
+        });
+
+        botaoExcluir.setText("Excluir");
+        botaoExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,20 +179,29 @@ public class InternalPedido extends javax.swing.JInternalFrame {
                                 .addComponent(labelEstado)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(textoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(labelPais)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(textoPais, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(24, 24, 24))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(botaoConfirmarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(labelDataEntrega)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tabFechamento, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoDataEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tabFechamento))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botaoAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelDataEntrega)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoDataEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(190, 190, 190))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(99, 99, 99)
+                    .addComponent(botaoConfirmarPedido1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(427, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,14 +223,25 @@ public class InternalPedido extends javax.swing.JInternalFrame {
                     .addComponent(labelEstado)
                     .addComponent(textoPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelPais))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
-                .addComponent(tabFechamento, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(tabFechamento, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(botaoAdicionar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoExcluir)
+                        .addGap(97, 97, 97)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoConfirmarPedido)
                     .addComponent(textoDataEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelDataEntrega))
-                .addContainerGap())
+                .addGap(23, 23, 23))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(349, Short.MAX_VALUE)
+                    .addComponent(botaoConfirmarPedido1)
+                    .addGap(21, 21, 21)))
         );
 
         pack();
@@ -213,17 +263,27 @@ public class InternalPedido extends javax.swing.JInternalFrame {
     }
     
     
-    private void botaoConfirmarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarPedidoActionPerformed
+    private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         
         getPedido();
         System.out.println(gscliente.toString());
         
-    }//GEN-LAST:event_botaoConfirmarPedidoActionPerformed
+    }//GEN-LAST:event_botaoAdicionarActionPerformed
+
+    private void botaoConfirmarPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarPedido1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoConfirmarPedido1ActionPerformed
+
+    private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoExcluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoCliente;
-    private javax.swing.JButton botaoConfirmarPedido;
+    private javax.swing.JButton botaoConfirmarPedido1;
+    private javax.swing.JButton botaoExcluir;
     private javax.swing.JInternalFrame frameFechamento;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JScrollPane jScrollPane1;
