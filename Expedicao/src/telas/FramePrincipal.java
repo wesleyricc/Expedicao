@@ -1,4 +1,4 @@
-
+package telas;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,6 +19,8 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     private InternalPedido pedido = new InternalPedido();
+    private InternalCargas cargas = new InternalCargas();
+    private InternalRotas rotas = new InternalRotas();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,14 +31,18 @@ public class FramePrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         painelPrincipal = new javax.swing.JDesktopPane();
         barraMenu = new javax.swing.JMenuBar();
-        menuPedidos = new javax.swing.JMenu();
-        pedidoNovo = new javax.swing.JMenuItem();
-        pedidoConsultar = new javax.swing.JMenuItem();
-        menuFaturamento = new javax.swing.JMenu();
-        faturamentoNota = new javax.swing.JMenuItem();
-        menuExpedicao = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        cargasGerenciar = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        expedicaoRotas = new javax.swing.JMenu();
+        rotasCriar = new javax.swing.JMenuItem();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,37 +50,46 @@ public class FramePrincipal extends javax.swing.JFrame {
         painelPrincipal.setLayout(painelPrincipalLayout);
         painelPrincipalLayout.setHorizontalGroup(
             painelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 767, Short.MAX_VALUE)
+            .addGap(0, 1024, Short.MAX_VALUE)
         );
         painelPrincipalLayout.setVerticalGroup(
             painelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGap(0, 768, Short.MAX_VALUE)
         );
 
-        menuPedidos.setText("Pedidos");
+        jMenu2.setText("Cadastrar");
 
-        pedidoNovo.setText("Novo");
-        pedidoNovo.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem3.setText("Transportador");
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem2.setText("Veículos");
+        jMenu2.add(jMenuItem2);
+
+        barraMenu.add(jMenu2);
+
+        cargasGerenciar.setText("Cargas");
+
+        jMenuItem1.setText("Gerenciar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pedidoNovoActionPerformed(evt);
+                jMenuItem1ActionPerformed(evt);
             }
         });
-        menuPedidos.add(pedidoNovo);
+        cargasGerenciar.add(jMenuItem1);
 
-        pedidoConsultar.setText("Consultar");
-        menuPedidos.add(pedidoConsultar);
+        barraMenu.add(cargasGerenciar);
 
-        barraMenu.add(menuPedidos);
+        expedicaoRotas.setText("Rotas");
 
-        menuFaturamento.setText("Faturamento");
+        rotasCriar.setText("Criar");
+        rotasCriar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rotasCriarActionPerformed(evt);
+            }
+        });
+        expedicaoRotas.add(rotasCriar);
 
-        faturamentoNota.setText("Nota Fiscal");
-        menuFaturamento.add(faturamentoNota);
-
-        barraMenu.add(menuFaturamento);
-
-        menuExpedicao.setText("Expedição");
-        barraMenu.add(menuExpedicao);
+        barraMenu.add(expedicaoRotas);
 
         setJMenuBar(barraMenu);
 
@@ -82,26 +97,39 @@ public class FramePrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelPrincipal)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(painelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelPrincipal)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(painelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
- 
+    private void rotasCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotasCriarActionPerformed
 
-    private void pedidoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedidoNovoActionPerformed
+        painelPrincipal.remove(rotas);
+        painelPrincipal.add(rotas);
+        rotas.setVisible(true);
+        rotas.setPosicao();
 
-        painelPrincipal.remove(pedido);
-        painelPrincipal.add(pedido);
-        pedido.setVisible(true);
-        pedido.setPosicao();
 
-    }//GEN-LAST:event_pedidoNovoActionPerformed
+    }//GEN-LAST:event_rotasCriarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+        painelPrincipal.remove(cargas);
+        painelPrincipal.add(cargas);
+        cargas.setVisible(true);
+        cargas.setPosicao();
+
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,13 +168,15 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
-    private javax.swing.JMenuItem faturamentoNota;
-    private javax.swing.JMenu menuExpedicao;
-    private javax.swing.JMenu menuFaturamento;
-    private javax.swing.JMenu menuPedidos;
+    private javax.swing.JMenu cargasGerenciar;
+    private javax.swing.JMenu expedicaoRotas;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JDesktopPane painelPrincipal;
-    private javax.swing.JMenuItem pedidoConsultar;
-    private javax.swing.JMenuItem pedidoNovo;
+    private javax.swing.JMenuItem rotasCriar;
     // End of variables declaration//GEN-END:variables
 
     private Object getDesktopPane() {
