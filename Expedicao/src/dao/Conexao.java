@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class Conexao {
 
     private static final String Drive = "com.mysql.jdbc.Driver";
-    private static final String Url = "jdbc:mysql://localhost:3306/mydb";
+    private static final String Url = "jdbc:mysql://localhost:3306/expedicao";
     private static final String User = "root";
     private static final String Pass = "";
     

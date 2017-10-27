@@ -34,11 +34,14 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         painelPrincipal = new javax.swing.JDesktopPane();
         barraMenu = new javax.swing.JMenuBar();
+        Faturamento = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         cargasGerenciar = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         expedicaoRotas = new javax.swing.JMenu();
         rotasCriar = new javax.swing.JMenuItem();
 
@@ -56,6 +59,13 @@ public class FramePrincipal extends javax.swing.JFrame {
             painelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 768, Short.MAX_VALUE)
         );
+
+        Faturamento.setText("Faturamento");
+
+        jMenuItem4.setText("Notas Fiscais");
+        Faturamento.add(jMenuItem4);
+
+        barraMenu.add(Faturamento);
 
         jMenu2.setText("Cadastrar");
 
@@ -76,6 +86,9 @@ public class FramePrincipal extends javax.swing.JFrame {
             }
         });
         cargasGerenciar.add(jMenuItem1);
+
+        jMenuItem5.setText("Visualizar");
+        cargasGerenciar.add(jMenuItem5);
 
         barraMenu.add(cargasGerenciar);
 
@@ -167,6 +180,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu Faturamento;
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenu cargasGerenciar;
     private javax.swing.JMenu expedicaoRotas;
@@ -175,6 +189,8 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JDesktopPane painelPrincipal;
     private javax.swing.JMenuItem rotasCriar;
     // End of variables declaration//GEN-END:variables

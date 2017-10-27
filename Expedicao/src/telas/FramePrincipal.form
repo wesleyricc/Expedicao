@@ -13,6 +13,18 @@
     </Container>
     <Menu class="javax.swing.JMenuBar" name="barraMenu">
       <SubComponents>
+        <Menu class="javax.swing.JMenu" name="Faturamento">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Faturamento"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Notas Fiscais"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cadastrar"/>
@@ -42,6 +54,11 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Visualizar"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
