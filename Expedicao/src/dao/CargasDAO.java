@@ -5,13 +5,14 @@
  */
 package dao;
 
+import gets_sets.CargasGetSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Vector;
 
 /**
  *
@@ -19,84 +20,111 @@ import java.util.logging.Logger;
  */
 public class CargasDAO {
 
-    public int getNFe(String cidade, String transporte) {
+        public List<CargasGetSet> getNFe(String t, String c) throws SQLException {
         ResultSet rs = null;
         Connection conn = null;
         PreparedStatement ps = null;
+
+        List<CargasGetSet> listaNFe = new ArrayList<>();
+
         
-        try {
             conn = Conexao.getConnection();
-            String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, endr.Numero\n" +
-                        "FROM clientes AS c\n" +
-                        "JOIN nota_fiscal as nf\n" +
-                        "JOIN endereco AS endr\n" +
-                        "JOIN itens_nota_fiscal as inf\n" +
-                        "JOIN pedidos as p\n" +
-                        "JOIN transportador as t\n" +
-                        "WHERE inf.idPedidos = p.idPedidos  AND\n" +
-                        "p.idClientes = c.idClientes AND\n" +
-                        "c.idEndereco = endr.idEndereco AND\n" +
-                        "nf.idTransportador = t.idTransportador AND\n" +
-                        "nf.idItens_Nota_Fiscal = inf.idItens_Nota_Fiscal\n" +
-                        // comparar cidade e transporte
-                        // itens de nota fiscal fazer getset separado
-                        "order by idNota_Fiscal;";
+            String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, endr.Numero"
+                    + "FROM clientes AS c "
+                    + "JOIN nota_fiscal as nf "
+                    + "JOIN endereco AS endr "
+                    + "JOIN itens_nota_fiscal as inf "
+                    + "JOIN pedidos as p "
+                    + "JOIN transportador as t "
+                    + "WHERE inf.idPedidos = p.idPedidos  AND "
+                    + "p.idClientes = c.idClientes AND "
+                    + "c.idEndereco = endr.idEndereco AND "
+                    + "nf.idTransportador = t.idTransportador AND "
+                    + "nf.idItens_Nota_Fiscal = inf.idItens_Nota_Fiscal "
+                    + // comparar cidade e transporte
+                    // itens de nota fiscal fazer getset separado
+                    "order by idNota_Fiscal;";
             ps = conn.prepareStatement(sql);
-            ps.setString(0, cidade);
-            ps.setString(1, transporte);
+            ps.setString(0, c);
+            ps.setString(1, t);
             rs = ps.executeQuery();
 
-           /* if (rs.next()) {
+            while (rs.next()) {
+                CargasGetSet cgt = new CargasGetSet();
 
-                String razao_social = rs.getString(1);
-                String nome = rs.getString(2);
-                String endereco = rs.getString(3);
-                String telefone = rs.getString(4);
-                String email = rs.getString(5);
-                String CNPJ = rs.getString(6);
-                
-                Fornecedor f = new Fornecedor();
-                f.setTextoRazaoFornecedor(razao_social);
-                f.setTextoNomeFornecedor(nome);
-                f.setTextoEnderecoFornecedor(endereco);
-                f.setTextoTelefoneFornecedor(telefone);
-                f.setTextoEmailFornecedor(email);
-                f.setTextoCNPJFornecedor(CNPJ);
-                
-                return f;
-            }*/
-                
+                cgt.setNFe(rs.getInt("id_notafiscal"));
+                cgt.setCliente(rs.getString("nome"));
+                cgt.setRua(rs.getString("logradouro"));
+                cgt.setCidade(rs.getString("cidade"));
+                cgt.setEstado(rs.getString("estado"));
+                cgt.setNumero(rs.getInt("numero"));
 
-            conn.commit();
-        } catch (SQLException e) {
-            // System.out.println("ERRO: " + e.getMessage());
+                listaNFe.add(cgt);
 
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    // System.out.println("ERRO: " + ex.getMessage());
-                }
             }
-
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    //System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    // System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            
+            return listaNFe;
         }
 
-        return 1; //retornar o correto
+    
+    
+    public Vector carregaCidadesCargas() throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        Vector cidade = new Vector();
+    
+            conn = Conexao.getConnection();
+            String sql = "select endr.Cidade " +
+                        "FROM clientes AS c " +
+                        "JOIN pedidos as p " +
+                        "JOIN endereco as endr " +
+                        "JOIN pedidos_itens as pi " +
+                        "JOIN pedidos_has_pedidos_itens as ppi " +
+                        "JOIN itens_nota_fiscal as inf " +
+                        "JOIN nota_fiscal as nf " +
+                        "WHERE c.idClientes = p.idClientes AND " +
+                        "p.idPedidos = ppi.idPedidos AND " +
+                        "ppi.idPedidos_Itens = pi.idPedidos_Itens AND " +
+                        "inf.idItens_Nota_Fiscal = nf.idItens_Nota_Fiscal AND " +
+                        "endr.idEndereco = c.idEndereco " +
+                        "GROUP BY endr.Cidade";
+            
+            ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                cidade.add(rs.getString("cidade"));
+   
+            }
+            rs.close();
+            conn.close();
+        
+
+        return cidade;
+    }
+    
+    public Vector carregaFormaTransporte() throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        Vector transporte = new Vector();
+    
+            conn = Conexao.getConnection();
+            String sql = "select t.Nome " +
+                        "FROM transportador as t " +
+                        "JOIN nota_fiscal as nf " +
+                        "WHERE nf.idTransportador = t.idTransportador " +
+                        "GROUP BY t.Nome";
+            
+            ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                transporte.add(rs.getString("nome"));
+   
+            }
+            rs.close();
+            conn.close();
+        
+
+        return transporte;
     }
 
 }

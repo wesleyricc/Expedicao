@@ -1,5 +1,9 @@
 package telas;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,12 +18,13 @@ public class FramePrincipal extends javax.swing.JFrame {
     /**
      * Creates new form FramePrincipal
      */
-    public FramePrincipal() {
+    public FramePrincipal() throws SQLException {
+        this.cargas = new InternalCargas();
         initComponents();
     }
 
     private InternalPedido pedido = new InternalPedido();
-    private InternalCargas cargas = new InternalCargas();
+    private InternalCargas cargas;
     private InternalRotas rotas = new InternalRotas();
 
     /**
@@ -174,7 +179,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FramePrincipal().setVisible(true);
+                try {
+                    new FramePrincipal().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

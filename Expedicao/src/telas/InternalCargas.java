@@ -1,7 +1,16 @@
 package telas;
 
 
+import dao.CargasDAO;
+import gets_sets.CargasGetSet;
 import java.awt.Dimension;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,8 +26,19 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     /**
      * Creates new form InternalCargas
      */
-    public InternalCargas() {
+    
+    private CargasDAO cargasDAO = new CargasDAO();
+    private DefaultTableModel model;
+    
+    Vector itensCidades = cargasDAO.carregaCidadesCargas();
+    Vector itensTransportador = cargasDAO.carregaFormaTransporte();
+    
+    
+    public InternalCargas() throws SQLException {
+  
         initComponents();
+        
+        setarCampos();
     }
 
     public void setPosicao() {
@@ -35,11 +55,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
+        transporteComboBox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cidadeComboBox = new javax.swing.JComboBox<>();
         botaoPesquisar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -59,7 +79,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        transporteComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel1.setText("Forma de Transporte");
 
@@ -67,7 +87,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Cidade");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cidadeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         botaoPesquisar.setText("Pesquisar");
         botaoPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -135,13 +155,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
         tabelaNFRelacionada.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "NFe", "Cliente", "Rua", "Cidade", "Estado", "Número"
             }
         ));
         jScrollPane5.setViewportView(tabelaNFRelacionada);
@@ -152,20 +169,6 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17)
-                        .addComponent(botaoPesquisar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(310, 310, 310)
-                        .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -196,24 +199,39 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(285, 285, 285)
                                     .addComponent(jLabel6))
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(transporteComboBox, 0, 174, Short.MAX_VALUE)
+                            .addComponent(cidadeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botaoPesquisar)
+                            .addComponent(jLabel2))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel3))
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(transporteComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(cidadeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addGap(32, 32, 32)
                         .addComponent(botaoPesquisar)))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel2)
@@ -245,7 +263,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -253,10 +271,40 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
     private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
        
-        //carregaLista();
+        try {
+            String transporte = (String) transporteComboBox.getSelectedItem();
+            String cidade = (String) cidadeComboBox.getSelectedItem();
+            
+            
+            List<CargasGetSet> NFe = cargasDAO.getNFe(transporte, cidade);
+            
+            
+            
+            model = (DefaultTableModel) tabelaNFRelacionada.getModel();
+            
+            for (int i = 0; i < NFe.size(); i++) {
+                //fornecedor gambiarra
+                
+                model.addRow(new Object[]{NFe.get(i).getNFe(), NFe.get(i).getCliente(), NFe.get(i).getRua(), NFe.get(i).getCidade(), NFe.get(i).getEstado(), NFe.get(i).getNumero()});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        
+        
 
     }//GEN-LAST:event_botaoPesquisarActionPerformed
 
+    public void setarCampos(){
+        DefaultComboBoxModel modelCidades = new DefaultComboBoxModel(itensCidades);
+        cidadeComboBox.setModel(modelCidades);
+       
+        DefaultComboBoxModel modelTransportador = new DefaultComboBoxModel(itensTransportador);
+        transporteComboBox.setModel(modelTransportador);
+        
+    }
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -276,11 +324,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoPesquisar;
+    private javax.swing.JComboBox<String> cidadeComboBox;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -296,5 +343,6 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tabelaNFRelacionada;
+    private javax.swing.JComboBox<String> transporteComboBox;
     // End of variables declaration//GEN-END:variables
 }

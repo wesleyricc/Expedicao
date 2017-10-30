@@ -13,17 +13,96 @@ import java.util.List;
  */
 public class CargasGetSet {
     
-    String idCarga;
+    String Cliente, Rua, Cidade, Estado;
     int Rota;
+    Integer NFe, idCarga, Numero;
     List<Integer> itensCarga;
+    List<CargasGetSet> itensNFe;
+    List<String> formaTransporte;
+    List<String> cidade;
 
-    public String getIdCarga() {
+    public Integer getIdCarga() {
         return idCarga;
     }
 
-    public void setIdCarga(String idCarga) {
+    public void setIdCarga(Integer idCarga) {
         this.idCarga = idCarga;
     }
+
+    public Integer getNumero() {
+        return Numero;
+    }
+
+    public void setNumero(Integer Numero) {
+        this.Numero = Numero;
+    }
+
+    public Integer getNFe() {
+        return NFe;
+    }
+
+    public void setNFe(Integer NFe) {
+        this.NFe = NFe;
+    }
+
+
+    public String getCliente() {
+        return Cliente;
+    }
+
+    public void setCliente(String Cliente) {
+        this.Cliente = Cliente;
+    }
+
+    public String getRua() {
+        return Rua;
+    }
+
+    public void setRua(String Rua) {
+        this.Rua = Rua;
+    }
+
+    public String getCidade() {
+        return Cidade;
+    }
+
+    public void setCidade(String Cidade) {
+        this.Cidade = Cidade;
+    }
+
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
+    }
+
+
+    public List<String> getFormaTransporte() {
+        return formaTransporte;
+    }
+
+    public void setFormaTransporte(List<String> formaTransporte) {
+        this.formaTransporte = formaTransporte;
+    }
+
+
+    public void setCidade(List<String> cidade) {
+        this.cidade = cidade;
+    }
+    
+
+    public List<CargasGetSet> getItensNFe() {
+        return itensNFe;
+    }
+
+    public void setItensNFe(List<CargasGetSet> itensNFe) {
+        this.itensNFe = itensNFe;
+    }
+    
+ 
+
 
     public int getRota() {
         return Rota;
