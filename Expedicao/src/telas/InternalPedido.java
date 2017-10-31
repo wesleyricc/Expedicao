@@ -1,6 +1,7 @@
 package telas;
 
 
+import gets_sets.NFeGetSet;
 import java.awt.Dimension;
 
 /*
@@ -19,7 +20,7 @@ public class InternalPedido extends javax.swing.JInternalFrame {
      * Creates new form InternalPedido
      */
     
-    private gets_sets_cliente gscliente = new gets_sets_cliente();
+    private NFeGetSet gscliente = new NFeGetSet();
     
     public InternalPedido() {
         initComponents();
@@ -250,24 +251,9 @@ public class InternalPedido extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    public gets_sets_cliente getPedido() {
-
-        
-        gscliente.setTextoCliente(textoCliente.getText());
-        gscliente.setTextoCidade(textoCidade.getText());
-        gscliente.setTextoEndereco(textoEndereco.getText());
-        gscliente.setTextoEstado(textoEstado.getText());
-        gscliente.setTextoNumero(textoNumero.getText());
-        gscliente.setTextoPais(textoPais.getText());
-        
-        
-        return gscliente;
-    }
-    
     
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         
-        getPedido();
         System.out.println(gscliente.toString());
         
     }//GEN-LAST:event_botaoAdicionarActionPerformed

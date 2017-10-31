@@ -1,10 +1,11 @@
 package telas;
 
-
 import dao.CargasDAO;
 import gets_sets.CargasGetSet;
+import gets_sets.NFeGetSet;
 import java.awt.Dimension;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -26,18 +27,20 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     /**
      * Creates new form InternalCargas
      */
-    
     private CargasDAO cargasDAO = new CargasDAO();
-    private DefaultTableModel model;
+    private DefaultTableModel modeloNFe, modeloCargas;
+    private List<NFeGetSet> nfgetset;
     
+
     Vector itensCidades = cargasDAO.carregaCidadesCargas();
     Vector itensTransportador = cargasDAO.carregaFormaTransporte();
-    
-    
+    private DefaultTableModel tabelaNF;
+    private DefaultTableModel tabelaC;
+
     public InternalCargas() throws SQLException {
-  
+
         initComponents();
-        
+
         setarCampos();
     }
 
@@ -64,11 +67,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        idCargaNum = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaCargas = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jTextField2 = new javax.swing.JTextField();
@@ -80,6 +83,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         setClosable(true);
 
         transporteComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        transporteComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transporteComboBoxActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Forma de Transporte");
 
@@ -97,6 +105,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Adicionar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Remover");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -107,9 +120,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
         jLabel4.setText("ID Carga");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        idCargaNum.setEditable(false);
+        idCargaNum.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        idCargaNum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                idCargaNumActionPerformed(evt);
             }
         });
 
@@ -122,18 +137,15 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaCargas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable1);
+        jScrollPane3.setViewportView(tabelaCargas);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -155,13 +167,34 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
         tabelaNFRelacionada.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "NFe", "Cliente", "Rua", "Cidade", "Estado", "Número"
+                "NFe", "Cliente", "Rua", "Cidade", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaNFRelacionada.getTableHeader().setReorderingAllowed(false);
+        tabelaNFRelacionada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaNFRelacionadaMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(tabelaNFRelacionada);
+        if (tabelaNFRelacionada.getColumnModel().getColumnCount() > 0) {
+            tabelaNFRelacionada.getColumnModel().getColumn(0).setResizable(false);
+            tabelaNFRelacionada.getColumnModel().getColumn(1).setResizable(false);
+            tabelaNFRelacionada.getColumnModel().getColumn(2).setResizable(false);
+            tabelaNFRelacionada.getColumnModel().getColumn(3).setResizable(false);
+            tabelaNFRelacionada.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -179,11 +212,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(100, 100, 100)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23)
-                        .addComponent(jButton2)
-                        .addGap(13, 13, 13)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(idCargaNum, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(80, 80, 80)
                         .addComponent(jButton4)
@@ -246,7 +279,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(idCargaNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(93, 93, 93)
@@ -263,55 +296,55 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
-       
+
         try {
+
             String transporte = (String) transporteComboBox.getSelectedItem();
             String cidade = (String) cidadeComboBox.getSelectedItem();
-            
-            
-            List<CargasGetSet> NFe = cargasDAO.getNFe(transporte, cidade);
-            
-            
-            
-            model = (DefaultTableModel) tabelaNFRelacionada.getModel();
-            
+
+            List<NFeGetSet> NFe = cargasDAO.getNFe(transporte, cidade);
+
+            modeloNFe = (DefaultTableModel) tabelaNFRelacionada.getModel();
+
+            modeloNFe.setNumRows(0);
+
             for (int i = 0; i < NFe.size(); i++) {
                 //fornecedor gambiarra
-                
-                model.addRow(new Object[]{NFe.get(i).getNFe(), NFe.get(i).getCliente(), NFe.get(i).getRua(), NFe.get(i).getCidade(), NFe.get(i).getEstado(), NFe.get(i).getNumero()});
+
+                modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoLogradouro(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado()});
             }
         } catch (SQLException ex) {
             Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-        
-        
+
 
     }//GEN-LAST:event_botaoPesquisarActionPerformed
 
-    public void setarCampos(){
+    public void setarCampos() throws SQLException {
         DefaultComboBoxModel modelCidades = new DefaultComboBoxModel(itensCidades);
         cidadeComboBox.setModel(modelCidades);
-       
+
         DefaultComboBoxModel modelTransportador = new DefaultComboBoxModel(itensTransportador);
         transporteComboBox.setModel(modelTransportador);
-        
+
+        idCargaNum.setText(Integer.toString(cargasDAO.numCarga()));
+
     }
-    
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void idCargaNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idCargaNumActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_idCargaNumActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -321,10 +354,52 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
+    private void transporteComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transporteComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_transporteComboBoxActionPerformed
+
+    private void tabelaNFRelacionadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaNFRelacionadaMouseClicked
+
+    }//GEN-LAST:event_tabelaNFRelacionadaMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        int linha = tabelaNFRelacionada.getSelectedRow();
+
+        if (linha != -1) {
+            modeloNFe.removeRow(linha);
+            
+             NFeGetSet nfegs = new NFeGetSet();
+                
+                nfegs.setId_Nota_Fiscal((Integer) tabelaNF.getValueAt(linha, 0)); //ERROOOOOOOOOOOOOUU
+                nfegs.setTextoCidade((String) tabelaNF.getValueAt(linha, 1));
+                nfegs.setTextoCliente((String) tabelaNF.getValueAt(linha, 2));
+                nfegs.setTextoLogradouro((String) tabelaNF.getValueAt(linha, 3));
+                nfegs.setTextoEstado((String) tabelaNF.getValueAt(linha, 4));
+                
+   
+                nfgetset.add(nfegs);
+            
+            for (int i = 0; i < nfgetset.size(); i++) {
+                //fornecedor gambiarra
+
+                tabelaC.addRow(new Object[]{nfgetset.get(i).getId_Nota_Fiscal(), nfgetset.get(i).getTextoCliente(), nfgetset.get(i).getTextoLogradouro(), nfgetset.get(i).getTextoCidade(), nfgetset.get(i).getTextoEstado()});
+            }
+            
+            
+            tabelaCargas.setModel(tabelaC);
+
+            
+        }
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoPesquisar;
     private javax.swing.JComboBox<String> cidadeComboBox;
+    private javax.swing.JTextField idCargaNum;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -338,10 +413,9 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tabelaCargas;
     private javax.swing.JTable tabelaNFRelacionada;
     private javax.swing.JComboBox<String> transporteComboBox;
     // End of variables declaration//GEN-END:variables

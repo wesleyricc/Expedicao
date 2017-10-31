@@ -6,6 +6,7 @@
 package dao;
 
 import gets_sets.CargasGetSet;
+import gets_sets.NFeGetSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,48 +23,52 @@ import java.util.Vector;
  */
 public class CargasDAO {
 
-        public List<CargasGetSet> getNFe(String t, String c) throws SQLException {
+        public List<NFeGetSet> getNFe(String t, String c) throws SQLException {
         ResultSet rs = null;
         Connection conn = null;
         PreparedStatement ps = null;
 
-        List<CargasGetSet> listaNFe = new ArrayList<>();
-
+        List<NFeGetSet> listaNFe = new ArrayList<>();
+        
         
             conn = Conexao.getConnection();
-            String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, endr.Numero"
-                    + "FROM clientes AS c "
-                    + "JOIN nota_fiscal as nf "
-                    + "JOIN endereco AS endr "
-                    + "JOIN itens_nota_fiscal as inf "
-                    + "JOIN pedidos as p "
-                    + "JOIN transportador as t "
-                    + "WHERE inf.idPedidos = p.idPedidos  AND "
-                    + "p.idClientes = c.idClientes AND "
-                    + "c.idEndereco = endr.idEndereco AND "
-                    + "nf.idTransportador = t.idTransportador AND "
-                    + "nf.idItens_Nota_Fiscal = inf.idItens_Nota_Fiscal "
-                    + // comparar cidade e transporte
-                    // itens de nota fiscal fazer getset separado
-                    "order by idNota_Fiscal;";
+            String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado " +
+                        "FROM clientes AS c " +
+                        "JOIN nota_fiscal as nf " +
+                        "JOIN endereco AS endr " +
+                        "JOIN itens_nota_fiscal as inf " +
+                        "JOIN pedidos as p " +
+                        "JOIN transportador as t " +
+                        "JOIN produto_acabado as pa " +
+                        "WHERE nf.idItens_Nota_Fiscal = inf.idItens_Nota_Fiscal AND " +
+                        "inf.idPedidos = p.idPedidos AND " +
+                        "c.idEndereco = endr.idEndereco AND " +
+                        "t.idTransportador = nf.idTransportador AND " +
+                        "t.Nome = ? AND " +
+                        "endr.Cidade = ? AND " +
+                        "p.idClientes = c.idClientes AND " +
+                        "pa.idPedidos = inf.idPedidos";
             ps = conn.prepareStatement(sql);
-            ps.setString(0, c);
             ps.setString(1, t);
+            ps.setString(2, c);
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                CargasGetSet cgt = new CargasGetSet();
-
-                cgt.setNFe(rs.getInt("id_notafiscal"));
-                cgt.setCliente(rs.getString("nome"));
-                cgt.setRua(rs.getString("logradouro"));
-                cgt.setCidade(rs.getString("cidade"));
-                cgt.setEstado(rs.getString("estado"));
-                cgt.setNumero(rs.getInt("numero"));
-
-                listaNFe.add(cgt);
-
+                NFeGetSet nfegs = new NFeGetSet();
+                
+                nfegs.setId_Nota_Fiscal(rs.getInt("idnota_fiscal"));
+                nfegs.setTextoCidade(rs.getString("cidade"));
+                nfegs.setTextoCliente(rs.getString("nome"));
+                nfegs.setTextoLogradouro(rs.getString("logradouro"));
+                nfegs.setTextoEstado(rs.getString("estado"));
+                
+   
+                listaNFe.add(nfegs);
             }
+            rs.close();
+            conn.close();
+            
+           
             
             return listaNFe;
         }
@@ -101,6 +108,26 @@ public class CargasDAO {
 
         return cidade;
     }
+    
+    public int numCarga() throws SQLException {
+
+        ResultSet rs = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        
+            conn = Conexao.getConnection();
+            String sql = "SELECT MAX(idCargas) + 1 FROM cargas";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("MAX(idCargas) + 1");
+            }
+        
+        return 0;
+    }
+    
     
     public Vector carregaFormaTransporte() throws SQLException {
         Connection conn = null;
