@@ -5,7 +5,6 @@ import gets_sets.CargasGetSet;
 import gets_sets.NFeGetSet;
 import java.awt.Dimension;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -30,12 +29,9 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     private CargasDAO cargasDAO = new CargasDAO();
     private DefaultTableModel modeloNFe, modeloCargas;
     private List<NFeGetSet> nfgetset;
-    
 
     Vector itensCidades = cargasDAO.carregaCidadesCargas();
     Vector itensTransportador = cargasDAO.carregaFormaTransporte();
-    private DefaultTableModel tabelaNF;
-    private DefaultTableModel tabelaC;
 
     public InternalCargas() throws SQLException {
 
@@ -64,7 +60,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         cidadeComboBox = new javax.swing.JComboBox<>();
         botaoPesquisar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botaoAdicionar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         idCargaNum = new javax.swing.JTextField();
@@ -104,10 +100,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Adicionar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botaoAdicionar.setText("Adicionar");
+        botaoAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botaoAdicionarActionPerformed(evt);
             }
         });
 
@@ -142,7 +138,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "NFe", "Cliente", "Rua", "Cidade", "Estado"
             }
         ));
         jScrollPane3.setViewportView(tabelaCargas);
@@ -214,7 +210,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addComponent(idCargaNum, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -272,7 +268,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
+                    .addComponent(botaoAdicionar)
                     .addComponent(jButton3)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
@@ -312,15 +308,25 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             List<NFeGetSet> NFe = cargasDAO.getNFe(transporte, cidade);
 
             modeloNFe = (DefaultTableModel) tabelaNFRelacionada.getModel();
-
+            modeloCargas = (DefaultTableModel) tabelaCargas.getModel();
             modeloNFe.setNumRows(0);
 
             for (int i = 0; i < NFe.size(); i++) {
-                //fornecedor gambiarra
+                //boolean flag = true;
+                //for (int j = 0; j < modeloCargas.getRowCount(); j++) {
+                  //  if (modeloCargas.getValueAt(i, 0) == NFe.get(j).getId_Nota_Fiscal()) {
+                   //     flag = false;
+                   //     System.out.println("é igual!");
+                   // }
 
-                modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoLogradouro(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado()});
-            }
-        } catch (SQLException ex) {
+                //}
+
+               //if (flag) {
+                   // System.out.println("é diferente!");
+                    modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoLogradouro(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado()});
+                }
+
+            }catch (SQLException ex) {
             Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -362,45 +368,40 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_tabelaNFRelacionadaMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
 
         int linha = tabelaNFRelacionada.getSelectedRow();
-
+        modeloCargas = (DefaultTableModel) tabelaCargas.getModel();
+        modeloNFe = (DefaultTableModel) tabelaNFRelacionada.getModel();
         if (linha != -1) {
+            modeloCargas.addRow(new Object[]{tabelaNFRelacionada.getValueAt(linha, 0), tabelaNFRelacionada.getValueAt(linha, 1), tabelaNFRelacionada.getValueAt(linha, 2), tabelaNFRelacionada.getValueAt(linha, 3), tabelaNFRelacionada.getValueAt(linha, 4)});
             modeloNFe.removeRow(linha);
-            
-             NFeGetSet nfegs = new NFeGetSet();
-                
-                nfegs.setId_Nota_Fiscal((Integer) tabelaNF.getValueAt(linha, 0)); //ERROOOOOOOOOOOOOUU
-                nfegs.setTextoCidade((String) tabelaNF.getValueAt(linha, 1));
-                nfegs.setTextoCliente((String) tabelaNF.getValueAt(linha, 2));
-                nfegs.setTextoLogradouro((String) tabelaNF.getValueAt(linha, 3));
-                nfegs.setTextoEstado((String) tabelaNF.getValueAt(linha, 4));
-                
-   
-                nfgetset.add(nfegs);
-            
-            for (int i = 0; i < nfgetset.size(); i++) {
-                //fornecedor gambiarra
 
-                tabelaC.addRow(new Object[]{nfgetset.get(i).getId_Nota_Fiscal(), nfgetset.get(i).getTextoCliente(), nfgetset.get(i).getTextoLogradouro(), nfgetset.get(i).getTextoCidade(), nfgetset.get(i).getTextoEstado()});
-            }
-            
-            
-            tabelaCargas.setModel(tabelaC);
-
-            
+            //modeloCargas.addRow((Object[]{tabelaNFRelacionada.getValueAt(linha, 0)}));
+//            NFeGetSet nfegs = new NFeGetSet();
+//            
+//            nfegs.setId_Nota_Fiscal(Integer.parseInt(modeloCargas.getValueAt(linha, 0).toString()));
+//            nfegs.setTextoCliente(modeloCargas.getValueAt(linha, 1).toString());
+//            nfegs.setTextoLogradouro(modeloCargas.getValueAt(linha, 2).toString());
+//            nfegs.setTextoCidade(modeloCargas.getValueAt(linha, 3).toString());
+//            nfegs.setTextoEstado(modeloCargas.getValueAt(linha, 4).toString());
+//            System.out.println(nfegs);
+//           
+//            modeloCargas.addRow(new Object[]{nfegs.getId_Nota_Fiscal(), nfegs.getTextoCliente(), nfegs.getTextoLogradouro(), nfegs.getTextoCidade(), nfegs.getTextoEstado()});
+//            modeloNFe.removeRow(linha);
+//            tabelaNFRelacionada.setModel(modeloNFe);
+//            tabelaCargas.setModel(modeloCargas);
         }
 
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botaoAdicionarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoPesquisar;
     private javax.swing.JComboBox<String> cidadeComboBox;
     private javax.swing.JTextField idCargaNum;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
