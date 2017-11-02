@@ -18,7 +18,7 @@ public class CargasGetSet {
     List<Integer> itensCarga;
     List<CargasGetSet> itensNFe;
     List<String> formaTransporte;
-    List<String> cidade;
+    List<String> cidades_entrega;
     
     public Integer getIdRota() {
         return idRota;
@@ -42,6 +42,14 @@ public class CargasGetSet {
 
     public void setNumero(Integer Numero) {
         this.Numero = Numero;
+    }
+
+    public List<String> getCidades_entrega() {
+        return cidades_entrega;
+    }
+
+    public void setCidades_entrega(List<String> cidades_entrega) {
+        this.cidades_entrega = cidades_entrega;
     }
 
     public Integer getNFe() {
@@ -96,7 +104,7 @@ public class CargasGetSet {
 
 
     public void setCidade(List<String> cidade) {
-        this.cidade = cidade;
+        this.cidades_entrega = cidade;
     }
     
 
