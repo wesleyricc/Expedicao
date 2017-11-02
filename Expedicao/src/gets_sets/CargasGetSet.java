@@ -14,13 +14,20 @@ import java.util.List;
 public class CargasGetSet {
     
     String Cliente, Rua, Cidade, Estado;
-    int Rota;
-    Integer NFe, idCarga, Numero;
+    Integer NFe, idCarga, Numero, idRota;
     List<Integer> itensCarga;
     List<CargasGetSet> itensNFe;
     List<String> formaTransporte;
     List<String> cidade;
+    
+    public Integer getIdRota() {
+        return idRota;
+    }
 
+    public void setIdRota(Integer idRota) {
+        this.idRota = idRota;
+    }
+    
     public Integer getIdCarga() {
         return idCarga;
     }
@@ -101,17 +108,6 @@ public class CargasGetSet {
         this.itensNFe = itensNFe;
     }
     
- 
-
-
-    public int getRota() {
-        return Rota;
-    }
-
-    public void setRota(int Rota) {
-        this.Rota = Rota;
-    }
-
     public List<Integer> getItensCarga() {
         return itensCarga;
     }

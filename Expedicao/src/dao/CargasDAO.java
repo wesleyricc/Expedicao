@@ -7,6 +7,7 @@ package dao;
 
 import gets_sets.CargasGetSet;
 import gets_sets.NFeGetSet;
+import gets_sets.RotasGetSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,133 +24,165 @@ import java.util.logging.Logger;
  */
 public class CargasDAO {
 
-        public List<NFeGetSet> getNFe(String t, String c) throws SQLException {
+    public List<NFeGetSet> getNFe(String t, String c) throws SQLException {
         ResultSet rs = null;
         Connection conn = null;
         PreparedStatement ps = null;
 
         List<NFeGetSet> listaNFe = new ArrayList<>();
-        
-        
-            conn = Conexao.getConnection();
-            String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado " +
-                        "FROM clientes AS c " +
-                        "JOIN nota_fiscal as nf " +
-                        "JOIN endereco AS endr " +
-                        "JOIN itens_nota_fiscal as inf " +
-                        "JOIN pedidos as p " +
-                        "JOIN transportador as t " +
-                        "JOIN produto_acabado as pa " +
-                        "WHERE nf.idItens_Nota_Fiscal = inf.idItens_Nota_Fiscal AND " +
-                        "inf.idPedidos = p.idPedidos AND " +
-                        "c.idEndereco = endr.idEndereco AND " +
-                        "t.idTransportador = nf.idTransportador AND " +
-                        "t.Nome = ? AND " +
-                        "endr.Cidade = ? AND " +
-                        "p.idClientes = c.idClientes AND " +
-                        "pa.idPedidos = inf.idPedidos";
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, t);
-            ps.setString(2, c);
-            rs = ps.executeQuery();
 
-            while (rs.next()) {
-                NFeGetSet nfegs = new NFeGetSet();
-                
-                nfegs.setId_Nota_Fiscal(rs.getInt("idnota_fiscal"));
-                nfegs.setTextoCidade(rs.getString("cidade"));
-                nfegs.setTextoCliente(rs.getString("nome"));
-                nfegs.setTextoLogradouro(rs.getString("logradouro"));
-                nfegs.setTextoEstado(rs.getString("estado"));
-                
-   
-                listaNFe.add(nfegs);
-            }
-            rs.close();
-            conn.close();
-            
-           
-            
-            return listaNFe;
+        conn = Conexao.getConnection();
+        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome "
+                + "from clientes as c "
+                + "join endereco as endr "
+                + "join transportador as t "
+                + "join nota_fiscal as nf "
+                + "join pedidos as p "
+                + "join clientes_has_pedidos as cp "
+                + "where nf.idClientes = c.idClientes and "
+                + "nf.idPedidos = p.idPedidos and "
+                + "nf.idTransportador = t.idTransportador and "
+                + "endr.idEndereco = c.idEndereco and "
+                + "endr.Cidade = ? AND "
+                + "t.Nome = ? "
+                + "GROUP by nf.idNota_Fiscal";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, c);
+        ps.setString(2, t);
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            NFeGetSet nfegs = new NFeGetSet();
+
+            nfegs.setId_Nota_Fiscal(rs.getInt("idnota_fiscal"));
+            nfegs.setTextoCidade(rs.getString("cidade"));
+            nfegs.setTextoCliente(rs.getString("nome"));
+            nfegs.setTextoLogradouro(rs.getString("logradouro"));
+            nfegs.setTextoEstado(rs.getString("estado"));
+
+            listaNFe.add(nfegs);
+        }
+        rs.close();
+        conn.close();
+
+        return listaNFe;
+    }
+
+    public void insertCargas(CargasGetSet carga) throws SQLException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        Integer idCarga = numCarga();
+
+        try {
+
+            conn = Conexao.getConnection();
+            String sql = "insert into cargas values(?,?);";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCarga);
+            ps.setString(2, "Liberado");
+            ps.execute();
+
+            // conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(CargasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    
-    
+        String sql = "insert into cargas_has_nota_fiscal values (?, ?)";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, idCarga);
+        ps.setInt(2, carga.getNFe());
+        ps.execute();
+
+    }
+
     public Vector carregaCidadesCargas() throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         Vector cidade = new Vector();
-    
-            conn = Conexao.getConnection();
-            String sql = "select endr.Cidade " +
-                        "FROM clientes AS c " +
-                        "JOIN pedidos as p " +
-                        "JOIN endereco as endr " +
-                        "JOIN pedidos_itens as pi " +
-                        "JOIN pedidos_has_pedidos_itens as ppi " +
-                        "JOIN itens_nota_fiscal as inf " +
-                        "JOIN nota_fiscal as nf " +
-                        "WHERE c.idClientes = p.idClientes AND " +
-                        "p.idPedidos = ppi.idPedidos AND " +
-                        "ppi.idPedidos_Itens = pi.idPedidos_Itens AND " +
-                        "inf.idItens_Nota_Fiscal = nf.idItens_Nota_Fiscal AND " +
-                        "endr.idEndereco = c.idEndereco " +
-                        "GROUP BY endr.Cidade";
-            
-            ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                cidade.add(rs.getString("cidade"));
-   
-            }
-            rs.close();
-            conn.close();
-        
+
+        conn = Conexao.getConnection();
+        String sql = "SELECT endr.Cidade "
+                + "from clientes as c "
+                + "join endereco as endr "
+                + "join transportador as t "
+                + "join nota_fiscal as nf "
+                + "join pedidos as p "
+                + "join clientes_has_pedidos as cp "
+                + "where nf.idClientes = c.idClientes and "
+                + "nf.idPedidos = p.idPedidos and "
+                + "nf.idTransportador = t.idTransportador and "
+                + "endr.idEndereco = c.idEndereco "
+                + "GROUP by nf.idNota_Fiscal";
+
+        ps = conn.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            cidade.add(rs.getString("cidade"));
+
+        }
+        rs.close();
+        conn.close();
 
         return cidade;
     }
-    
+
     public int numCarga() throws SQLException {
 
         ResultSet rs = null;
         Connection conn = null;
         PreparedStatement ps = null;
 
-        
-            conn = Conexao.getConnection();
-            String sql = "SELECT MAX(idCargas) + 1 FROM cargas";
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
+        conn = Conexao.getConnection();
+        String sql = "SELECT MAX(idCargas) + 1 FROM cargas";
+        ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
 
-            if (rs.next()) {
-                return rs.getInt("MAX(idCargas) + 1");
-            }
-        
+        if (rs.next()) {
+            return rs.getInt("MAX(idCargas) + 1");
+        }
+
         return 0;
     }
-    
-    
+
+    public int numRota() throws SQLException {
+
+        ResultSet rs = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        conn = Conexao.getConnection();
+        String sql = "SELECT MAX(idRotas) + 1 FROM rotas";
+        ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt("MAX(idRotas) + 1");
+        }
+
+        return 0;
+    }
+
     public Vector carregaFormaTransporte() throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         Vector transporte = new Vector();
-    
-            conn = Conexao.getConnection();
-            String sql = "select t.Nome " +
-                        "FROM transportador as t " +
-                        "JOIN nota_fiscal as nf " +
-                        "WHERE nf.idTransportador = t.idTransportador " +
-                        "GROUP BY t.Nome";
-            
-            ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                transporte.add(rs.getString("nome"));
-   
-            }
-            rs.close();
-            conn.close();
-        
+
+        conn = Conexao.getConnection();
+        String sql = "SELECT t.Nome "
+                + "FROM transportador as t "
+                + "JOIN nota_fiscal as nf "
+                + "WHERE nf.idTransportador = t.idTransportador "
+                + "group by t.Nome";
+
+        ps = conn.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            transporte.add(rs.getString("nome"));
+
+        }
+        rs.close();
+        conn.close();
 
         return transporte;
     }
