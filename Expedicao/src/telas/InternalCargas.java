@@ -32,14 +32,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     private DefaultTableModel modeloNFe, modeloCargas;
     private List<NFeGetSet> nfgetset;
 
-    Vector itensCidades = cargasDAO.carregaCidadesCargas();
-    Vector itensTransportador = cargasDAO.carregaFormaTransporte();
-
     public InternalCargas() throws SQLException {
 
         initComponents();
 
-        setarCampos();
     }
 
     public void setPosicao() {
@@ -95,6 +91,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         jLabel3.setText("Cidade");
 
         cidadeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cidadeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cidadeComboBoxActionPerformed(evt);
+            }
+        });
 
         botaoPesquisar.setText("Pesquisar");
         botaoPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -349,6 +350,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_botaoPesquisarActionPerformed
 
     public void setarCampos() throws SQLException {
+
+        Vector itensCidades = cargasDAO.carregaCidadesCargas();
+        Vector itensTransportador = cargasDAO.carregaFormaTransporte();
+
         DefaultComboBoxModel modelCidades = new DefaultComboBoxModel(itensCidades);
         cidadeComboBox.setModel(modelCidades);
 
@@ -373,11 +378,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         int linha = tabelaCargas.getRowCount();
         CargasGetSet Carga = new CargasGetSet();
         List cidades_entrega = new ArrayList();
-      
+
         for (int i = 0; i < linha; i++) {
             Carga.setNFe(Integer.parseInt(tabelaCargas.getValueAt(i, 0).toString()));
             cidades_entrega.add(tabelaCargas.getValueAt(i, 3).toString());
-            
+
             try {
                 cargasDAO.insertCargas(Carga);
             } catch (SQLException ex) {
@@ -385,13 +390,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             }
 
         }
-        
+
         Carga.setCidades_entrega(cidades_entrega);
-        
-       
-        
+
         modeloCargas.setNumRows(0);
-        
+
     }//GEN-LAST:event_botaoConfirmarCargaActionPerformed
 
     private void idRotaNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idRotaNumActionPerformed
@@ -437,6 +440,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     private void botaoBaixoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBaixoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoBaixoActionPerformed
+
+    private void cidadeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cidadeComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cidadeComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

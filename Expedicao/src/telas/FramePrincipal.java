@@ -23,11 +23,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         initComponents();
     }
 
-    private InternalPedido pedido = new InternalPedido();
-    private InternalCargas cargas;
-    private InternalCadastroTransportador cadastrotransp = new InternalCadastroTransportador();
-    private InternalCadastroVeículos cadastroveiculos = new InternalCadastroVeículos();
-    private InternalNotaFiscal notafiscal = new InternalNotaFiscal();
+    private final InternalPedido pedido = new InternalPedido();
+    private final InternalCargas cargas;
+    private final InternalCadastroTransportador cadastrotransp = new InternalCadastroTransportador();
+    private final InternalCadastroVeículos cadastroveiculos = new InternalCadastroVeículos();
+    private final InternalNotaFiscal notafiscal = new InternalNotaFiscal();
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,14 +41,14 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         painelPrincipal = new javax.swing.JDesktopPane();
         barraMenu = new javax.swing.JMenuBar();
-        Faturamento = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        cargasGerenciar = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        menuFaturamento = new javax.swing.JMenu();
+        menuNFeFaturamento = new javax.swing.JMenuItem();
+        menuCadastrar = new javax.swing.JMenu();
+        menuTransportadorCadastrar = new javax.swing.JMenuItem();
+        menuVeiculosCadastrar = new javax.swing.JMenuItem();
+        menuCargas = new javax.swing.JMenu();
+        menuGerenciarCargas = new javax.swing.JMenuItem();
+        menuVisualizarCargas = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -65,52 +65,52 @@ public class FramePrincipal extends javax.swing.JFrame {
             .addGap(0, 618, Short.MAX_VALUE)
         );
 
-        Faturamento.setText("Faturamento");
+        menuFaturamento.setText("Faturamento");
 
-        jMenuItem4.setText("Emissão de NFe");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menuNFeFaturamento.setText("Emissão de NFe");
+        menuNFeFaturamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menuNFeFaturamentoActionPerformed(evt);
             }
         });
-        Faturamento.add(jMenuItem4);
+        menuFaturamento.add(menuNFeFaturamento);
 
-        barraMenu.add(Faturamento);
+        barraMenu.add(menuFaturamento);
 
-        jMenu2.setText("Cadastrar");
+        menuCadastrar.setText("Cadastrar");
 
-        jMenuItem3.setText("Transportador");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuTransportadorCadastrar.setText("Transportador");
+        menuTransportadorCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuTransportadorCadastrarActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        menuCadastrar.add(menuTransportadorCadastrar);
 
-        jMenuItem2.setText("Veículos");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuVeiculosCadastrar.setText("Veículos");
+        menuVeiculosCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuVeiculosCadastrarActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        menuCadastrar.add(menuVeiculosCadastrar);
 
-        barraMenu.add(jMenu2);
+        barraMenu.add(menuCadastrar);
 
-        cargasGerenciar.setText("Cargas");
+        menuCargas.setText("Cargas");
 
-        jMenuItem1.setText("Gerenciar");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuGerenciarCargas.setText("Gerenciar");
+        menuGerenciarCargas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuGerenciarCargasActionPerformed(evt);
             }
         });
-        cargasGerenciar.add(jMenuItem1);
+        menuCargas.add(menuGerenciarCargas);
 
-        jMenuItem5.setText("Visualizar");
-        cargasGerenciar.add(jMenuItem5);
+        menuVisualizarCargas.setText("Visualizar");
+        menuCargas.add(menuVisualizarCargas);
 
-        barraMenu.add(cargasGerenciar);
+        barraMenu.add(menuCargas);
 
         setJMenuBar(barraMenu);
 
@@ -132,17 +132,25 @@ public class FramePrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuGerenciarCargasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGerenciarCargasActionPerformed
 
+    
+        try {
+            cargas.setarCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+        
         painelPrincipal.remove(cargas);
         painelPrincipal.add(cargas);
         cargas.setVisible(true);
         cargas.setPosicao();
 
 
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuGerenciarCargasActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void menuTransportadorCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTransportadorCadastrarActionPerformed
         
         painelPrincipal.remove(cadastrotransp);
         painelPrincipal.add(cadastrotransp);
@@ -150,21 +158,28 @@ public class FramePrincipal extends javax.swing.JFrame {
         cadastrotransp.setPosicao();
 
         
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menuTransportadorCadastrarActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menuVeiculosCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVeiculosCadastrarActionPerformed
+        
+        try {
+            cadastroveiculos.setarCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         painelPrincipal.remove(cadastroveiculos);
         painelPrincipal.add(cadastroveiculos);
         cadastroveiculos.setVisible(true);
         cadastroveiculos.setPosicao();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menuVeiculosCadastrarActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void menuNFeFaturamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNFeFaturamentoActionPerformed
         painelPrincipal.remove(notafiscal);
         painelPrincipal.add(notafiscal);
         notafiscal.setVisible(true);
         notafiscal.setPosicao();
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_menuNFeFaturamentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,16 +221,16 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu Faturamento;
     private javax.swing.JMenuBar barraMenu;
-    private javax.swing.JMenu cargasGerenciar;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenu menuCadastrar;
+    private javax.swing.JMenu menuCargas;
+    private javax.swing.JMenu menuFaturamento;
+    private javax.swing.JMenuItem menuGerenciarCargas;
+    private javax.swing.JMenuItem menuNFeFaturamento;
+    private javax.swing.JMenuItem menuTransportadorCadastrar;
+    private javax.swing.JMenuItem menuVeiculosCadastrar;
+    private javax.swing.JMenuItem menuVisualizarCargas;
     private javax.swing.JDesktopPane painelPrincipal;
     // End of variables declaration//GEN-END:variables
 

@@ -138,7 +138,7 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                 jComboBox3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 198, -1, -1));
+        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, -1, -1));
 
         jLabel20.setText("Pedido");
         getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 201, -1, -1));
@@ -155,10 +155,10 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         getContentPane().add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, -1, -1));
 
         jButton1.setText("Cadastrar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(237, 385, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 380, -1, -1));
 
         jButton2.setText("Limpar");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(354, 385, 102, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 380, 102, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
