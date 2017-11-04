@@ -66,13 +66,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         botaoConfirmarCarga = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaCargas = new javax.swing.JTable();
-        idRotaNum = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tabelaNFRelacionada = new javax.swing.JTable();
-        botaoBaixo = new javax.swing.JButton();
-        botaoCima = new javax.swing.JButton();
+        botaoSubir = new javax.swing.JButton();
+        botaoDescer = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Gerenciar Cargas");
@@ -145,17 +143,12 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                 "NFe", "Cliente", "Rua", "Cidade", "Estado"
             }
         ));
-        jScrollPane3.setViewportView(tabelaCargas);
-
-        idRotaNum.setEditable(false);
-        idRotaNum.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        idRotaNum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idRotaNumActionPerformed(evt);
+        tabelaCargas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaCargasMouseClicked(evt);
             }
         });
-
-        jLabel7.setText("Rota");
+        jScrollPane3.setViewportView(tabelaCargas);
 
         tabelaNFRelacionada.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -188,14 +181,22 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             tabelaNFRelacionada.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        botaoBaixo.setText("Subir");
-        botaoBaixo.addActionListener(new java.awt.event.ActionListener() {
+        botaoSubir.setText("Subir");
+        botaoSubir.setFocusable(false);
+        botaoSubir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botaoSubir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botaoSubir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoBaixoActionPerformed(evt);
+                botaoSubirActionPerformed(evt);
             }
         });
 
-        botaoCima.setText("Descer");
+        botaoDescer.setText("Descer");
+        botaoDescer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDescerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -203,6 +204,28 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(305, 305, 305)
+                                .addComponent(jLabel6))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(idCargaNum, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(botaoSubir, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                            .addComponent(botaoDescer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(220, 220, 220)
+                        .addComponent(botaoConfirmarCarga))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -222,41 +245,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel2))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(305, 305, 305)
-                                .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(idCargaNum, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(idRotaNum, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(botaoBaixo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(botaoCima, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 50, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(botaoConfirmarCarga)
-                .addGap(265, 265, 265))
+                                .addGap(39, 39, 39)))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,6 +277,12 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                     .addComponent(botaoAdicionar)
                     .addComponent(jButton3))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoSubir)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoDescer)
+                        .addGap(49, 49, 49))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -296,19 +294,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(93, 93, 93)
                                 .addComponent(jLabel6))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(idRotaNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botaoCima)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botaoBaixo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(botaoConfirmarCarga)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -329,19 +318,23 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             modeloNFe.setNumRows(0);
 
             for (int i = 0; i < NFe.size(); i++) {
-                //boolean flag = true;
-                //for (int j = 0; j < modeloCargas.getRowCount(); j++) {
-                //  if (modeloCargas.getValueAt(i, 0) == NFe.get(j).getId_Nota_Fiscal()) {
-                //     flag = false;
-                //     System.out.println("é igual!");
-                // }
 
-                //}
-                //if (flag) {
-                // System.out.println("é diferente!");
-                modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoLogradouro(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado()});
+                
+                boolean flag = true;
+                for (int j = 0; j < modeloCargas.getRowCount(); j++) {
+                    
+                    if (modeloCargas.getValueAt(j, 0) == NFe.get(i).getId_Nota_Fiscal()) {
+                        flag = false;
+                        System.out.println("é igual!");
+                        
+                    }
+                }
+                if (flag) {
+                    System.out.println("é diferente!");   
+                    modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoLogradouro(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado()});
+                }
+
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -361,7 +354,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         transporteComboBox.setModel(modelTransportador);
 
         idCargaNum.setText(Integer.toString(cargasDAO.numCarga()));
-        idRotaNum.setText(Integer.toString(cargasDAO.numRota()));
+        
 
     }
 
@@ -396,10 +389,6 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         modeloCargas.setNumRows(0);
 
     }//GEN-LAST:event_botaoConfirmarCargaActionPerformed
-
-    private void idRotaNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idRotaNumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idRotaNumActionPerformed
 
     private void transporteComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transporteComboBoxActionPerformed
         // TODO add your handling code here:
@@ -437,24 +426,58 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
-    private void botaoBaixoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBaixoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoBaixoActionPerformed
+    private void botaoSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSubirActionPerformed
+
+        int tamanho = tabelaCargas.getRowCount();
+
+        modeloCargas.moveRow(tabelaCargas.getSelectedRow(), tabelaCargas.getSelectedRow(), tabelaCargas.getSelectedRow() - 1);
+
+        tabelaCargas.setModel(modeloCargas);
+
+
+    }//GEN-LAST:event_botaoSubirActionPerformed
 
     private void cidadeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cidadeComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cidadeComboBoxActionPerformed
 
+    private void botaoDescerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDescerActionPerformed
+
+        int tamanho = tabelaCargas.getRowCount();
+
+        modeloCargas.moveRow(tabelaCargas.getSelectedRow(), tabelaCargas.getSelectedRow(), tabelaCargas.getSelectedRow() + 1);
+
+        tabelaCargas.setModel(modeloCargas);
+
+    }//GEN-LAST:event_botaoDescerActionPerformed
+
+    private void tabelaCargasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCargasMouseClicked
+
+        if (tabelaCargas.getSelectedRow() - 1 == -1) {
+
+            botaoSubir.setEnabled(false);
+        } else {
+            botaoSubir.setEnabled(true);
+        }
+
+        if (tabelaCargas.getSelectedRow() + 1 == tabelaCargas.getRowCount()) {
+
+            botaoDescer.setEnabled(false);
+        } else {
+            botaoDescer.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_tabelaCargasMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
-    private javax.swing.JButton botaoBaixo;
-    private javax.swing.JButton botaoCima;
     private javax.swing.JButton botaoConfirmarCarga;
+    private javax.swing.JButton botaoDescer;
     private javax.swing.JButton botaoPesquisar;
+    private javax.swing.JButton botaoSubir;
     private javax.swing.JComboBox<String> cidadeComboBox;
     private javax.swing.JTextField idCargaNum;
-    private javax.swing.JTextField idRotaNum;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -462,7 +485,6 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable tabelaCargas;
