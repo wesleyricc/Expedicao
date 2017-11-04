@@ -7,7 +7,6 @@ package dao;
 
 import gets_sets.CargasGetSet;
 import gets_sets.NFeGetSet;
-import gets_sets.RotasGetSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,11 +87,27 @@ public class CargasDAO {
             Logger.getLogger(CargasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        String sql = "insert into cargas_has_nota_fiscal values (?, ?)";
-        ps = conn.prepareStatement(sql);
-        ps.setInt(1, idCarga);
-        ps.setInt(2, carga.getNFe());
-        ps.execute();
+    }
+
+    public void insertCargasNotaFiscal(CargasGetSet carga) throws SQLException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        Integer idCarga = numCarga() - 1;
+
+        try {
+            
+            conn = Conexao.getConnection();
+            String sql = "insert into cargas_has_nota_fiscal values (?, ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCarga);
+            ps.setInt(2, carga.getNFe());
+            ps.execute();
+
+            // conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(CargasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 

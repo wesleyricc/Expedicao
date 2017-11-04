@@ -29,10 +29,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
      * Creates new form InternalCargas
      */
     private CargasDAO cargasDAO = new CargasDAO();
-    private DefaultTableModel modeloNFe, modeloCargas;
+    private DefaultTableModel modeloNFe, modeloCargas, modeloRotas;
     private List<NFeGetSet> nfgetset;
 
-    public InternalCargas() throws SQLException {
+    public InternalCargas() {
 
         initComponents();
 
@@ -248,7 +248,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(39, 39, 39)))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +280,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoSubir)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botaoDescer)
                         .addGap(49, 49, 49))
                     .addGroup(layout.createSequentialGroup()
@@ -319,18 +319,17 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
             for (int i = 0; i < NFe.size(); i++) {
 
-                
                 boolean flag = true;
                 for (int j = 0; j < modeloCargas.getRowCount(); j++) {
-                    
+
                     if (modeloCargas.getValueAt(j, 0) == NFe.get(i).getId_Nota_Fiscal()) {
                         flag = false;
                         System.out.println("é igual!");
-                        
+
                     }
                 }
                 if (flag) {
-                    System.out.println("é diferente!");   
+                    System.out.println("é diferente!");
                     modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoLogradouro(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado()});
                 }
 
@@ -354,7 +353,6 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         transporteComboBox.setModel(modelTransportador);
 
         idCargaNum.setText(Integer.toString(cargasDAO.numCarga()));
-        
 
     }
 
@@ -372,16 +370,20 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         CargasGetSet Carga = new CargasGetSet();
         List cidades_entrega = new ArrayList();
 
+        try {
+            cargasDAO.insertCargas(Carga);
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         for (int i = 0; i < linha; i++) {
             Carga.setNFe(Integer.parseInt(tabelaCargas.getValueAt(i, 0).toString()));
-            cidades_entrega.add(tabelaCargas.getValueAt(i, 3).toString());
-
             try {
-                cargasDAO.insertCargas(Carga);
+                cargasDAO.insertCargasNotaFiscal(Carga);
             } catch (SQLException ex) {
                 Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            cidades_entrega.add(tabelaCargas.getValueAt(i, 3).toString());
         }
 
         Carga.setCidades_entrega(cidades_entrega);
@@ -389,6 +391,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         modeloCargas.setNumRows(0);
 
     }//GEN-LAST:event_botaoConfirmarCargaActionPerformed
+
 
     private void transporteComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transporteComboBoxActionPerformed
         // TODO add your handling code here:

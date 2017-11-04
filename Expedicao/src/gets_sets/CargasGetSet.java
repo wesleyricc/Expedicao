@@ -5,6 +5,7 @@
  */
 package gets_sets;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,8 @@ public class CargasGetSet {
     List<Integer> itensCarga;
     List<CargasGetSet> itensNFe;
     List<String> formaTransporte;
-    List<String> cidades_entrega;
+    List<String> cidades_entrega = new ArrayList<>();
+    
     
     public Integer getIdRota() {
         return idRota;

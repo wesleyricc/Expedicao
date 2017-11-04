@@ -28,6 +28,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private final InternalCadastroTransportador cadastrotransp = new InternalCadastroTransportador();
     private final InternalCadastroVeículos cadastroveiculos = new InternalCadastroVeículos();
     private final InternalNotaFiscal notafiscal = new InternalNotaFiscal();
+    private final InternalRotas rotas = new InternalRotas();
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,6 +50,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         menuCargas = new javax.swing.JMenu();
         menuGerenciarCargas = new javax.swing.JMenuItem();
         menuVisualizarCargas = new javax.swing.JMenuItem();
+        menuRotas = new javax.swing.JMenu();
+        menuGerenciarRotas = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -111,6 +114,18 @@ public class FramePrincipal extends javax.swing.JFrame {
         menuCargas.add(menuVisualizarCargas);
 
         barraMenu.add(menuCargas);
+
+        menuRotas.setText("Rotas");
+
+        menuGerenciarRotas.setText("Gerenciar");
+        menuGerenciarRotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuGerenciarRotasActionPerformed(evt);
+            }
+        });
+        menuRotas.add(menuGerenciarRotas);
+
+        barraMenu.add(menuRotas);
 
         setJMenuBar(barraMenu);
 
@@ -181,6 +196,13 @@ public class FramePrincipal extends javax.swing.JFrame {
         notafiscal.setPosicao();
     }//GEN-LAST:event_menuNFeFaturamentoActionPerformed
 
+    private void menuGerenciarRotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGerenciarRotasActionPerformed
+        painelPrincipal.remove(rotas);
+        painelPrincipal.add(rotas);
+        rotas.setVisible(true);
+        rotas.setPosicao();
+    }//GEN-LAST:event_menuGerenciarRotasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -227,7 +249,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuCargas;
     private javax.swing.JMenu menuFaturamento;
     private javax.swing.JMenuItem menuGerenciarCargas;
+    private javax.swing.JMenuItem menuGerenciarRotas;
     private javax.swing.JMenuItem menuNFeFaturamento;
+    private javax.swing.JMenu menuRotas;
     private javax.swing.JMenuItem menuTransportadorCadastrar;
     private javax.swing.JMenuItem menuVeiculosCadastrar;
     private javax.swing.JMenuItem menuVisualizarCargas;
