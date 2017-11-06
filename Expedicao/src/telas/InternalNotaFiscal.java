@@ -5,7 +5,13 @@
  */
 package telas;
 
+import dao.nfeDAO;
+import gets_sets.NFeGetSet;
 import java.awt.Dimension;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,6 +22,11 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
     /**
      * Creates new form InternalNotaFiscal
      */
+    
+    private NFeGetSet nfegs = new NFeGetSet();
+    private nfeDAO nfeDAO = new nfeDAO();
+            
+    
     public InternalNotaFiscal() {
         initComponents();
     }
@@ -55,7 +66,7 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         jLabel19 = new javax.swing.JLabel();
         botaoFaturar = new javax.swing.JButton();
         botaoLimpar = new javax.swing.JButton();
-        jTextField15 = new javax.swing.JTextField();
+        textoNomeCliente = new javax.swing.JTextField();
         botaoPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -110,6 +121,11 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         botaoLimpar.setText("Limpar");
 
         botaoPesquisar.setText("Pesquisar");
+        botaoPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoPesquisarActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -192,7 +208,7 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textoNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botaoPesquisar)
                         .addGap(195, 195, 195)
@@ -249,7 +265,7 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoPesquisar)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20))
@@ -285,6 +301,24 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
+    private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
+        
+        
+        try {
+            String nomeCliente = textoNomeCliente.getText();
+            
+            List<NFeGetSet> NFeGS = nfeDAO.buscarCliente(nomeCliente);
+                               
+            textoNomeCliente.setText(NFeGS.get(0).getNomeCliente());
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_botaoPesquisarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoFaturar;
@@ -311,8 +345,8 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
+    private javax.swing.JTextField textoNomeCliente;
     // End of variables declaration//GEN-END:variables
 }

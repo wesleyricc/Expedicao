@@ -32,7 +32,6 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     private CargasDAO cargasDAO = new CargasDAO();
     private rotasDAO rotasDAO = new rotasDAO();
     private DefaultTableModel modeloNFe, modeloCargas, modeloRotas;
-    private List<NFeGetSet> nfgetset;
     private RotasGetSet rotasgs = new RotasGetSet();
 
     public InternalCargas() {
@@ -327,7 +326,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             String transporte = (String) transporteComboBox.getSelectedItem();
             String cidade = (String) cidadeComboBox.getSelectedItem();
 
-            List<NFeGetSet> NFe = cargasDAO.getNFe(transporte, cidade);
+            List<CargasGetSet> NFe = cargasDAO.getNFe(transporte, cidade);
 
             modeloNFe = (DefaultTableModel) tabelaNFRelacionada.getModel();
             modeloCargas = (DefaultTableModel) tabelaCargas.getModel();
@@ -509,7 +508,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
        
         try {
 
-            List<NFeGetSet> NFe = cargasDAO.getNFeGeral();
+            List<CargasGetSet> NFe = cargasDAO.getNFeGeral();
             
             modeloNFe = (DefaultTableModel) tabelaNFRelacionada.getModel();
             modeloCargas = (DefaultTableModel) tabelaCargas.getModel();

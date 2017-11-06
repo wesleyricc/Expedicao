@@ -24,12 +24,12 @@ import java.util.logging.Logger;
 public class CargasDAO {
 
     
-    public List<NFeGetSet> getNFe(String t, String c) throws SQLException {
+    public List<CargasGetSet> getNFe(String t, String c) throws SQLException {
         ResultSet rs = null;
         Connection conn = null;
         PreparedStatement ps = null;
 
-        List<NFeGetSet> listaNFe = new ArrayList<>();
+        List<CargasGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
         String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome "
@@ -53,7 +53,7 @@ public class CargasDAO {
         rs = ps.executeQuery();
 
         while (rs.next()) {
-            NFeGetSet nfegs = new NFeGetSet();
+            CargasGetSet nfegs = new CargasGetSet();
 
             nfegs.setId_Nota_Fiscal(rs.getInt("idnota_fiscal"));
             nfegs.setTextoCidade(rs.getString("cidade"));
@@ -69,12 +69,12 @@ public class CargasDAO {
         return listaNFe;
     }
 
-    public List<NFeGetSet> getNFeGeral() throws SQLException {
+    public List<CargasGetSet> getNFeGeral() throws SQLException {
         ResultSet rs = null;
         Connection conn = null;
         PreparedStatement ps = null;
 
-        List<NFeGetSet> listaNFe = new ArrayList<>();
+        List<CargasGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
         String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome "
@@ -94,7 +94,7 @@ public class CargasDAO {
         rs = ps.executeQuery();
 
         while (rs.next()) {
-            NFeGetSet nfegs = new NFeGetSet();
+            CargasGetSet nfegs = new CargasGetSet();
 
             nfegs.setId_Nota_Fiscal(rs.getInt("idnota_fiscal"));
             nfegs.setTextoCidade(rs.getString("cidade"));

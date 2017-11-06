@@ -1,74 +1,126 @@
-package gets_sets;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package gets_sets;
+
+
 /**
  *
  * @author comp16
  */
 public class NFeGetSet {
 
-    private Integer id_Nota_Fiscal, notasExistentes_cargas;
-    private String textoCliente;
-    private String textoLogradouro;
-    private String textoCidade;
-    private String textoEstado;
+    Integer idNota, idCliente, idPedido, idVeiculo, idPedidoItens, idTransportador;
+    float baseicms, baseicms_st, valoricms, valoricmssub;
+    String obs, valor, nomeCliente;
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+
+    public Integer getIdNota() {
+        return idNota;
+    }
+
+    public void setIdNota(Integer idNota) {
+        this.idNota = idNota;
+    }
+
+    public Integer getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public Integer getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Integer idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public Integer getIdVeiculo() {
+        return idVeiculo;
+    }
+
+    public void setIdVeiculo(Integer idVeiculo) {
+        this.idVeiculo = idVeiculo;
+    }
+
+    public Integer getIdPedidoItens() {
+        return idPedidoItens;
+    }
+
+    public void setIdPedidoItens(Integer idPedidoItens) {
+        this.idPedidoItens = idPedidoItens;
+    }
+
+    public Integer getIdTransportador() {
+        return idTransportador;
+    }
+
+    public void setIdTransportador(Integer idTransportador) {
+        this.idTransportador = idTransportador;
+    }
+
+    public float getBaseicms() {
+        return baseicms;
+    }
+
+    public void setBaseicms(float baseicms) {
+        this.baseicms = baseicms;
+    }
+
+    public float getBaseicms_st() {
+        return baseicms_st;
+    }
+
+    public void setBaseicms_st(float baseicms_st) {
+        this.baseicms_st = baseicms_st;
+    }
+
+    public float getValoricms() {
+        return valoricms;
+    }
+
+    public void setValoricms(float valoricms) {
+        this.valoricms = valoricms;
+    }
+
+    public float getValoricmssub() {
+        return valoricmssub;
+    }
+
+    public void setValoricmssub(float valoricmssub) {
+        this.valoricmssub = valoricmssub;
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
     
-    public Integer getNotasExistentes_cargas() {
-        return notasExistentes_cargas;
-    }
-
-    public void setNotasExistentes_cargas(Integer notasExistentes_cargas) {
-        this.notasExistentes_cargas = notasExistentes_cargas;
-    }
-
-    public Integer getId_Nota_Fiscal() {
-        return id_Nota_Fiscal;
-    }
-
-    public void setId_Nota_Fiscal(Integer id_Nota_Fiscal) {
-        this.id_Nota_Fiscal = id_Nota_Fiscal;
-    }
-
-    public String getTextoCliente() {
-        return textoCliente;
-    }
-
-    public void setTextoCliente(String textoCliente) {
-        this.textoCliente = textoCliente;
-    }
-
-    public String getTextoLogradouro() {
-        return textoLogradouro;
-    }
-
-    public void setTextoLogradouro(String textoEndereco) {
-        this.textoLogradouro = textoEndereco;
-    }
-
-    public String getTextoCidade() {
-        return textoCidade;
-    }
-
-    public void setTextoCidade(String textoCidade) {
-        this.textoCidade = textoCidade;
-    }
-
-    public String getTextoEstado() {
-        return textoEstado;
-    }
-
-    public void setTextoEstado(String textoEstado) {
-        this.textoEstado = textoEstado;
-    }
-
-  
-
-    public String toString() {
-        return "Cliente:\n\n" + "Nome: " + textoCliente + "\nEndereço: " + textoLogradouro + "\nCidade: " + textoCidade + "\nEstado:  " + textoEstado;
-    }
-
+    
+    
+    
 }
