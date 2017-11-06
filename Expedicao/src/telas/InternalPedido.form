@@ -20,6 +20,9 @@
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="internalFrameClosed" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameClosed"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -159,6 +162,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textoCliente">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoClienteKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="botaoCliente">
       <Properties>
@@ -166,6 +172,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textoEndereco">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoEnderecoKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="labelEndereco">
       <Properties>
@@ -173,6 +182,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textoNumero">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoNumeroKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoDataEntrega">
     </Component>
@@ -182,8 +194,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textoCidade">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoCidadeKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoEstado">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoEstadoKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="labelNumero">
       <Properties>
@@ -301,6 +319,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoPais">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoPaisKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="labelPais">
       <Properties>

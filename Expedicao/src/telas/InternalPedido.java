@@ -3,6 +3,7 @@ package telas;
 
 import gets_sets.NFeGetSet;
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -68,14 +69,61 @@ public class InternalPedido extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jEditorPane1);
 
         setClosable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         labelCliente.setText("Cliente");
 
+        textoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoClienteKeyTyped(evt);
+            }
+        });
+
         botaoCliente.setText("...");
+
+        textoEndereco.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoEnderecoKeyTyped(evt);
+            }
+        });
 
         labelEndereco.setText("Endereço");
 
+        textoNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoNumeroKeyTyped(evt);
+            }
+        });
+
         labelDataEntrega.setText("Data de Entrega");
+
+        textoCidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoCidadeKeyTyped(evt);
+            }
+        });
+
+        textoEstado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoEstadoKeyTyped(evt);
+            }
+        });
 
         labelNumero.setText("Nº");
 
@@ -131,6 +179,12 @@ public class InternalPedido extends javax.swing.JInternalFrame {
         botaoAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAdicionarActionPerformed(evt);
+            }
+        });
+
+        textoPais.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoPaisKeyTyped(evt);
             }
         });
 
@@ -265,6 +319,88 @@ public class InternalPedido extends javax.swing.JInternalFrame {
     private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoExcluirActionPerformed
+
+    private void textoClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoClienteKeyTyped
+        String caracteres = "0987654321";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoCliente.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoClienteKeyTyped
+
+    private void textoEnderecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoEnderecoKeyTyped
+        String caracteres = "0987654321";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoEndereco.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoEnderecoKeyTyped
+
+    private void textoNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoNumeroKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoNumero.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoNumeroKeyTyped
+
+    private void textoCidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoCidadeKeyTyped
+        String caracteres = "0987654321";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoCidade.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoCidadeKeyTyped
+
+    private void textoEstadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoEstadoKeyTyped
+        String caracteres = "0987654321";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoCidade.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoEstadoKeyTyped
+
+    private void textoPaisKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoPaisKeyTyped
+        String caracteres = "0987654321";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoPais.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoPaisKeyTyped
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+
+    }//GEN-LAST:event_formInternalFrameClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

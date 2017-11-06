@@ -41,6 +41,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jMenu1 = new javax.swing.JMenu();
         painelPrincipal = new javax.swing.JDesktopPane();
+        jLabel2 = new javax.swing.JLabel();
         barraMenu = new javax.swing.JMenuBar();
         menuFaturamento = new javax.swing.JMenu();
         menuNFeFaturamento = new javax.swing.JMenuItem();
@@ -56,16 +57,29 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Módulo Expedição");
+
+        painelPrincipal.setBackground(new java.awt.Color(0, 102, 102));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telas/truck-brown-icon.png"))); // NOI18N
+
+        painelPrincipal.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout painelPrincipalLayout = new javax.swing.GroupLayout(painelPrincipal);
         painelPrincipal.setLayout(painelPrincipalLayout);
         painelPrincipalLayout.setHorizontalGroup(
             painelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1024, Short.MAX_VALUE)
+            .addGroup(painelPrincipalLayout.createSequentialGroup()
+                .addGap(452, 452, 452)
+                .addComponent(jLabel2)
+                .addContainerGap(446, Short.MAX_VALUE))
         );
         painelPrincipalLayout.setVerticalGroup(
             painelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 618, Short.MAX_VALUE)
+            .addGroup(painelPrincipalLayout.createSequentialGroup()
+                .addGap(222, 222, 222)
+                .addComponent(jLabel2)
+                .addContainerGap(222, Short.MAX_VALUE))
         );
 
         menuFaturamento.setText("Faturamento");
@@ -133,9 +147,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(painelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(painelPrincipal)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,7 +233,7 @@ public class FramePrincipal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows Classic".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -251,6 +263,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu menuCadastrar;
     private javax.swing.JMenu menuCargas;

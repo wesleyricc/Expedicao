@@ -10,10 +10,11 @@ import dao.TransportadorDAO;
 import gets_sets.EnderecoGetSet;
 import gets_sets.TransportadorGetSet;
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Wesley Ricardo
+ * @author Wesley Ricardo & PHB
  */
 public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
 
@@ -51,7 +52,6 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         textoCidade = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        textoCNPJ = new javax.swing.JTextField();
         botaoCadastrarTransportador = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -62,10 +62,29 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
         textoNumero = new javax.swing.JTextField();
         textoPais = new javax.swing.JTextField();
         textoRua = new javax.swing.JTextField();
-        textoTelefone = new javax.swing.JTextField();
+        textoCNPJ = new javax.swing.JFormattedTextField();
+        textoTelefone = new javax.swing.JFormattedTextField();
+        botaoCancelar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Cadastro de Transportador");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         botaoLimparTransportador.setText("Limpar");
         botaoLimparTransportador.addActionListener(new java.awt.event.ActionListener() {
@@ -79,6 +98,11 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
                 textoNomeActionPerformed(evt);
             }
         });
+        textoNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoNomeKeyTyped(evt);
+            }
+        });
 
         jLabel3.setText("CNPJ");
 
@@ -89,14 +113,13 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
                 textoCidadeActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("Nome");
-
-        textoCNPJ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoCNPJActionPerformed(evt);
+        textoCidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoCidadeKeyTyped(evt);
             }
         });
+
+        jLabel1.setText("Nome");
 
         botaoCadastrarTransportador.setText("Cadastrar");
         botaoCadastrarTransportador.addActionListener(new java.awt.event.ActionListener() {
@@ -120,10 +143,20 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
                 textoEstadoActionPerformed(evt);
             }
         });
+        textoEstado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoEstadoKeyTyped(evt);
+            }
+        });
 
         textoNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoNumeroActionPerformed(evt);
+            }
+        });
+        textoNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoNumeroKeyTyped(evt);
             }
         });
 
@@ -132,16 +165,44 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
                 textoPaisActionPerformed(evt);
             }
         });
+        textoPais.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoPaisKeyTyped(evt);
+            }
+        });
 
         textoRua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoRuaActionPerformed(evt);
             }
         });
+        textoRua.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoRuaKeyTyped(evt);
+            }
+        });
 
-        textoTelefone.addActionListener(new java.awt.event.ActionListener() {
+        try {
+            textoCNPJ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        textoCNPJ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoTelefoneActionPerformed(evt);
+                textoCNPJActionPerformed(evt);
+            }
+        });
+
+        try {
+            textoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        botaoCancelar.setText("Cancelar");
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
             }
         });
 
@@ -150,56 +211,64 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(textoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(botaoCadastrarTransportador)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoLimparTransportador, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(25, 25, 25)
+                                        .addComponent(jLabel5)
+                                        .addGap(21, 21, 21))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(textoRua, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                    .addComponent(textoCNPJ)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(17, 17, 17)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(textoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel6)
-                                .addGap(5, 5, 5)
-                                .addComponent(textoEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(3, 3, 3)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(textoRua, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                    .addComponent(textoCNPJ))))
+                                        .addComponent(textoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(textoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(botaoCadastrarTransportador)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(botaoLimparTransportador, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel4))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(11, 11, 11)
+                                        .addComponent(jLabel7))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel8)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textoPais)
-                            .addComponent(textoNumero)
-                            .addComponent(textoTelefone))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textoPais)
+                                    .addComponent(textoNumero)
+                                    .addComponent(textoTelefone)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botaoCancelar)
+                                .addGap(40, 40, 40))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(textoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,13 +278,11 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
                     .addComponent(textoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(textoCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(textoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(textoCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -235,11 +302,12 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(textoPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel8)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoCadastrarTransportador)
                     .addComponent(botaoLimparTransportador)
-                    .addComponent(botaoCadastrarTransportador))
-                .addContainerGap())
+                    .addComponent(botaoCancelar))
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -252,10 +320,6 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
     private void textoCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoCidadeActionPerformed
-
-    private void textoCNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCNPJActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoCNPJActionPerformed
 
     private void textoEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoEstadoActionPerformed
         // TODO add your handling code here:
@@ -273,12 +337,11 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textoRuaActionPerformed
 
-    private void textoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoTelefoneActionPerformed
-
     private void botaoCadastrarTransportadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarTransportadorActionPerformed
       
+        String Telefone = textoTelefone.getText().replaceAll("[()-]", "");
+        String CNPJ = textoCNPJ.getText().trim().replaceAll("[./-]","");
+        
         endgetset.setCidade(textoCidade.getText());
         endgetset.setEstado(textoEstado.getText());
         endgetset.setNumero(Integer.parseInt(textoNumero.getText()));
@@ -302,6 +365,98 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
   
     }//GEN-LAST:event_botaoLimparTransportadorActionPerformed
 
+    private void textoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoNomeKeyTyped
+        String caracteres = "0987654321";
+        if (caracteres.contains(evt.getKeyChar() + "")) { 
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoNome.getText().length() == limit) {
+
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_textoNomeKeyTyped
+
+    private void textoRuaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoRuaKeyTyped
+        String caracteres = "0987654321";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoRua.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoRuaKeyTyped
+
+    private void textoCidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoCidadeKeyTyped
+         String caracteres = "0987654321";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoCidade.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoCidadeKeyTyped
+
+    private void textoNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoNumeroKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoNumero.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoNumeroKeyTyped
+
+    private void textoPaisKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoPaisKeyTyped
+         String caracteres = "0987654321";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 50;
+
+        if (textoPais.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoPaisKeyTyped
+
+    private void textoEstadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoEstadoKeyTyped
+        String caracteres = "0987654321";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        int limit = 2;
+
+        if (textoRua.getText().length() == limit) {
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_textoEstadoKeyTyped
+
+    private void textoCNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCNPJActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoCNPJActionPerformed
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+          LimparCampos();        
+    }//GEN-LAST:event_formInternalFrameClosed
+
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        this.dispose();
+        LimparCampos();
+    }//GEN-LAST:event_botaoCancelarActionPerformed
+
     
     public void LimparCampos(){
         
@@ -318,6 +473,7 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrarTransportador;
+    private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoLimparTransportador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -327,13 +483,13 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField textoCNPJ;
+    private javax.swing.JFormattedTextField textoCNPJ;
     private javax.swing.JTextField textoCidade;
     private javax.swing.JTextField textoEstado;
     private javax.swing.JTextField textoNome;
     private javax.swing.JTextField textoNumero;
     private javax.swing.JTextField textoPais;
     private javax.swing.JTextField textoRua;
-    private javax.swing.JTextField textoTelefone;
+    private javax.swing.JFormattedTextField textoTelefone;
     // End of variables declaration//GEN-END:variables
 }
