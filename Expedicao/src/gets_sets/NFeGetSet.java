@@ -11,12 +11,19 @@ package gets_sets;
  */
 public class NFeGetSet {
 
-    private Integer id_Nota_Fiscal;
+    private Integer id_Nota_Fiscal, notasExistentes_cargas;
     private String textoCliente;
     private String textoLogradouro;
     private String textoCidade;
     private String textoEstado;
     
+    public Integer getNotasExistentes_cargas() {
+        return notasExistentes_cargas;
+    }
+
+    public void setNotasExistentes_cargas(Integer notasExistentes_cargas) {
+        this.notasExistentes_cargas = notasExistentes_cargas;
+    }
 
     public Integer getId_Nota_Fiscal() {
         return id_Nota_Fiscal;

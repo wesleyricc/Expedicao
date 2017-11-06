@@ -5,8 +5,18 @@
  */
 package telas;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import dao.CargasDAO;
+import dao.rotasDAO;
+import gets_sets.NFeGetSet;
+import gets_sets.RotasGetSet;
 import java.awt.Dimension;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,20 +28,33 @@ public class InternalRotas extends javax.swing.JInternalFrame {
     /**
      * Creates new form InternalRotas
      */
-    
     private final InternalCargas int_cargas = new InternalCargas();
-    
+    private DefaultTableModel modeloRotas;
+
+    rotasDAO rotasdao = new rotasDAO();
+
     public InternalRotas() {
         initComponents();
-        
 
     }
 
-    
-     public void setPosicao() {
+    public void setarCampos() throws SQLException {
+
+        Vector itensTransportador = rotasdao.carregaTransportador();
+        //List<RotasGetSet> rotas = rotasdao.listarCargasLiberadas(comboTransportador.getSelectedItem().toString());
+        
+        DefaultComboBoxModel modeloTransportador = new DefaultComboBoxModel(itensTransportador);
+        comboTransportador.setModel(modeloTransportador);
+
+        modeloRotas = (DefaultTableModel) tabelaRotas.getModel();  
+
+    }
+
+    public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,11 +66,13 @@ public class InternalRotas extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaRotas = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboTransportador = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        comboVeiculo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+
+        setClosable(true);
 
         tabelaRotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,11 +98,21 @@ public class InternalRotas extends javax.swing.JInternalFrame {
             tabelaRotas.getColumnModel().getColumn(1).setPreferredWidth(500);
         }
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboTransportador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboTransportador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                comboTransportadorMouseExited(evt);
+            }
+        });
+        comboTransportador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTransportadorActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Transportador");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboVeiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Veículo" }));
 
         jLabel2.setText("Veículo");
 
@@ -99,8 +134,8 @@ public class InternalRotas extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboTransportador, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -108,12 +143,12 @@ public class InternalRotas extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboTransportador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -124,11 +159,28 @@ public class InternalRotas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void comboTransportadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTransportadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboTransportadorActionPerformed
+
+    private void comboTransportadorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboTransportadorMouseExited
+
+        Vector itensVeiculos = null;
+        try {
+            itensVeiculos = rotasdao.carregaVeiculos(comboTransportador.getSelectedItem().toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalRotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        DefaultComboBoxModel modeloVeiculo = new DefaultComboBoxModel(itensVeiculos);
+        comboVeiculo.setModel(modeloVeiculo);
+
+    }//GEN-LAST:event_comboTransportadorMouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> comboTransportador;
+    private javax.swing.JComboBox<String> comboVeiculo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

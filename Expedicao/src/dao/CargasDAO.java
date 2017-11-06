@@ -23,6 +23,7 @@ import java.util.logging.Logger;
  */
 public class CargasDAO {
 
+    
     public List<NFeGetSet> getNFe(String t, String c) throws SQLException {
         ResultSet rs = null;
         Connection conn = null;
@@ -42,6 +43,7 @@ public class CargasDAO {
                 + "nf.idPedidos = p.idPedidos and "
                 + "nf.idTransportador = t.idTransportador and "
                 + "endr.idEndereco = c.idEndereco and "
+                + "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) and "
                 + "endr.Cidade = ? AND "
                 + "t.Nome = ? "
                 + "GROUP by nf.idNota_Fiscal";
@@ -67,6 +69,49 @@ public class CargasDAO {
         return listaNFe;
     }
 
+    public List<NFeGetSet> getNFeGeral() throws SQLException {
+        ResultSet rs = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        List<NFeGetSet> listaNFe = new ArrayList<>();
+
+        conn = Conexao.getConnection();
+        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome "
+                + "from clientes as c "
+                + "join endereco as endr "
+                + "join transportador as t "
+                + "join nota_fiscal as nf "
+                + "join pedidos as p "
+                + "join clientes_has_pedidos as cp "
+                + "where nf.idClientes = c.idClientes and "
+                + "nf.idPedidos = p.idPedidos and "
+                + "nf.idTransportador = t.idTransportador and "
+                + "endr.idEndereco = c.idEndereco and "
+                + "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) "
+                + "GROUP by nf.idNota_Fiscal";
+        ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            NFeGetSet nfegs = new NFeGetSet();
+
+            nfegs.setId_Nota_Fiscal(rs.getInt("idnota_fiscal"));
+            nfegs.setTextoCidade(rs.getString("cidade"));
+            nfegs.setTextoCliente(rs.getString("nome"));
+            nfegs.setTextoLogradouro(rs.getString("logradouro"));
+            nfegs.setTextoEstado(rs.getString("estado"));
+
+            listaNFe.add(nfegs);
+        }
+        rs.close();
+        conn.close();
+
+        return listaNFe;
+    }
+    
+    
+    
     public void insertCargas(CargasGetSet carga) throws SQLException {
 
         Connection conn = null;
@@ -94,6 +139,7 @@ public class CargasDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         Integer idCarga = numCarga() - 1;
+   
 
         try {
             

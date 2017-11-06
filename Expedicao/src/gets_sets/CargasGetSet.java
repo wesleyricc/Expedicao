@@ -16,11 +16,13 @@ public class CargasGetSet {
     
     String Cliente, Rua, Cidade, Estado;
     Integer NFe, idCarga, Numero, idRota;
+
     List<Integer> itensCarga;
     List<CargasGetSet> itensNFe;
     List<String> formaTransporte;
     List<String> cidades_entrega = new ArrayList<>();
     
+ 
     
     public Integer getIdRota() {
         return idRota;

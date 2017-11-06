@@ -8,33 +8,16 @@ package gets_sets;
 import java.util.List;
 
 public class RotasGetSet {
-    
-    Integer idRota;
-    String inicio, fim;
+
+    Integer idCarga;
     List<String> cidades;
 
-    public Integer getIdRota() {
-        return idRota;
+    public Integer getIdCarga() {
+        return idCarga;
     }
 
-    public void setIdRota(Integer idRota) {
-        this.idRota = idRota;
-    }
-
-    public String getInicio() {
-        return inicio;
-    }
-
-    public void setInicio(String inicio) {
-        this.inicio = inicio;
-    }
-
-    public String getFim() {
-        return fim;
-    }
-
-    public void setFim(String fim) {
-        this.fim = fim;
+    public void setIdCarga(Integer idCarga) {
+        this.idCarga = idCarga;
     }
 
     public List<String> getCidades() {
@@ -45,6 +28,4 @@ public class RotasGetSet {
         this.cidades = cidades;
     }
 
-    
-    
 }

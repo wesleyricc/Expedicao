@@ -1,6 +1,7 @@
 package telas;
 
 import dao.CargasDAO;
+import dao.rotasDAO;
 import gets_sets.CargasGetSet;
 import gets_sets.NFeGetSet;
 import gets_sets.RotasGetSet;
@@ -29,8 +30,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
      * Creates new form InternalCargas
      */
     private CargasDAO cargasDAO = new CargasDAO();
+    private rotasDAO rotasDAO = new rotasDAO();
     private DefaultTableModel modeloNFe, modeloCargas, modeloRotas;
     private List<NFeGetSet> nfgetset;
+    private RotasGetSet rotasgs = new RotasGetSet();
 
     public InternalCargas() {
 
@@ -71,6 +74,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         tabelaNFRelacionada = new javax.swing.JTable();
         botaoSubir = new javax.swing.JButton();
         botaoDescer = new javax.swing.JButton();
+        botaoNFeGeral = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Gerenciar Cargas");
@@ -198,6 +202,13 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             }
         });
 
+        botaoNFeGeral.setText("Exibir NFe Geral");
+        botaoNFeGeral.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoNFeGeralActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -241,7 +252,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                                         .addComponent(cidadeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(botaoPesquisar)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(botaoPesquisar)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(botaoNFeGeral))
                                         .addComponent(jLabel2))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,7 +269,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -263,12 +277,14 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel3))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(transporteComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
+                                .addGap(11, 11, 11)
                                 .addComponent(cidadeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(botaoPesquisar)))
-                .addGap(30, 30, 30)
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botaoNFeGeral)
+                            .addComponent(botaoPesquisar))))
+                .addGap(31, 31, 31)
                 .addComponent(jLabel2)
                 .addGap(5, 5, 5)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -297,7 +313,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(botaoConfirmarCarga)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -369,7 +385,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         int linha = tabelaCargas.getRowCount();
         CargasGetSet Carga = new CargasGetSet();
         List cidades_entrega = new ArrayList();
-
+        
         try {
             cargasDAO.insertCargas(Carga);
         } catch (SQLException ex) {
@@ -387,7 +403,24 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         }
 
         Carga.setCidades_entrega(cidades_entrega);
+        
+        Integer idCarga = -1;
+        
+        try {
+            idCarga = cargasDAO.numCarga() - 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+        rotasgs.setIdCarga(idCarga);
+        rotasgs.setCidades(cidades_entrega);
+        
+              
+        try {
+            setarCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
+        }
         modeloCargas.setNumRows(0);
 
     }//GEN-LAST:event_botaoConfirmarCargaActionPerformed
@@ -472,11 +505,45 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_tabelaCargasMouseClicked
 
+    private void botaoNFeGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNFeGeralActionPerformed
+       
+        try {
+
+            List<NFeGetSet> NFe = cargasDAO.getNFeGeral();
+            
+            modeloNFe = (DefaultTableModel) tabelaNFRelacionada.getModel();
+            modeloCargas = (DefaultTableModel) tabelaCargas.getModel();
+            modeloNFe.setNumRows(0);
+
+            for (int i = 0; i < NFe.size(); i++) {
+
+                boolean flag = true;
+                for (int j = 0; j < modeloCargas.getRowCount(); j++) {
+
+                    if (modeloCargas.getValueAt(j, 0) == NFe.get(i).getId_Nota_Fiscal()) {
+                        flag = false;
+                        System.out.println("é igual!");
+
+                    }
+                }
+                if (flag) {
+                    System.out.println("é diferente!");
+                    modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoLogradouro(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado()});
+                }
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_botaoNFeGeralActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoConfirmarCarga;
     private javax.swing.JButton botaoDescer;
+    private javax.swing.JButton botaoNFeGeral;
     private javax.swing.JButton botaoPesquisar;
     private javax.swing.JButton botaoSubir;
     private javax.swing.JComboBox<String> cidadeComboBox;

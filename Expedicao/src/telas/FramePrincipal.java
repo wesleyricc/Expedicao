@@ -199,6 +199,13 @@ public class FramePrincipal extends javax.swing.JFrame {
     private void menuGerenciarRotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGerenciarRotasActionPerformed
         painelPrincipal.remove(rotas);
         painelPrincipal.add(rotas);
+        
+        try {
+            rotas.setarCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         rotas.setVisible(true);
         rotas.setPosicao();
     }//GEN-LAST:event_menuGerenciarRotasActionPerformed
@@ -214,7 +221,7 @@ public class FramePrincipal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows Classic".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
