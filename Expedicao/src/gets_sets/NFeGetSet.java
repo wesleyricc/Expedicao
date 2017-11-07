@@ -12,10 +12,50 @@ package gets_sets;
  */
 public class NFeGetSet {
 
-    Integer idNota, idCliente, idPedido, idVeiculo, idPedidoItens, idTransportador;
+    Integer idNota, idCliente, idPedido, idVeiculo, idPedidoItens, idTransportador, quantidade;
     float baseicms, baseicms_st, valoricms, valoricmssub;
-    String obs, valor, nomeCliente;
+    String obs, valor, nomeCliente, descpedido, transportador, veiculo;
 
+    public String getTransportador() {
+        return transportador;
+    }
+
+    public void setTransportador(String transportador) {
+        this.transportador = transportador;
+    }
+
+    public String getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(String veiculo) {
+        this.veiculo = veiculo;
+    }
+
+    
+    
+    
+    
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    
+    
+    public String getDescpedido() {
+        return descpedido;
+    }
+
+    public void setDescpedido(String descpedido) {
+        this.descpedido = descpedido;
+    }
+
+    
+    
     public String getNomeCliente() {
         return nomeCliente;
     }
