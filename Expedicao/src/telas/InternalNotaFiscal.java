@@ -672,8 +672,10 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         
         for(int i=0; i< transGS.size(); i++){
                     
-            textoIdTransportador.setText(transGS.get(i).getIdTransportador().toString());
-            
+            if(transGS.get(i).getNome() == comboTransporte.getSelectedItem()){
+                textoIdTransportador.setText(transGS.get(i).getIdTransportador().toString());
+            }
+   
         }
                
         /*Vector veiculos = null;

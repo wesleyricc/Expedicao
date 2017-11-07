@@ -32,21 +32,24 @@ public class CargasDAO {
         List<CargasGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome "
-                + "from clientes as c "
-                + "join endereco as endr "
-                + "join transportador as t "
-                + "join nota_fiscal as nf "
-                + "join pedidos as p "
-                + "join clientes_has_pedidos as cp "
-                + "where nf.idClientes = c.idClientes and "
-                + "nf.idPedidos = p.idPedidos and "
-                + "nf.idTransportador = t.idTransportador and "
-                + "endr.idEndereco = c.idEndereco and "
-                + "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) and "
-                + "endr.Cidade = ? AND "
-                + "t.Nome = ? "
-                + "GROUP by nf.idNota_Fiscal";
+        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome " +
+                    "from clientes as c " +
+                    "join endereco as endr " +
+                    "join transportador as t " +
+                    "join nota_fiscal as nf " +
+                    "join pedidos as p " +
+                    "join clientes_has_pedidos as cp " +
+                    "join pedidos_itens as pi " +
+                    "where nf.idClientes = c.idClientes and " +
+                    "nf.idPedidos = p.idPedidos and " +
+                    "nf.idTransportador = t.idTransportador and " +
+                    "endr.idEndereco = c.idEndereco and " +
+                    "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) and " +
+                    "endr.Cidade = ? AND " +
+                    "t.Nome = ? and " +
+                    "nf.idClientes = c.idClientes and cp.idPedidos = p.idPedidos and " +
+                    "cp.idPedidos_Itens = pi.idPedidos_Itens";
+                //+ "GROUP by nf.idNota_Fiscal";
         ps = conn.prepareStatement(sql);
         ps.setString(1, c);
         ps.setString(2, t);
@@ -174,7 +177,7 @@ public class CargasDAO {
                 + "nf.idPedidos = p.idPedidos and "
                 + "nf.idTransportador = t.idTransportador and "
                 + "endr.idEndereco = c.idEndereco "
-                + "GROUP by nf.idNota_Fiscal";
+                + "GROUP BY endr.Cidade";
 
         ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
