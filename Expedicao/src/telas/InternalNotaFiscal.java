@@ -10,11 +10,8 @@ import gets_sets.NFeGetSet;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -580,22 +577,22 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         try {
             setarCampos();
             
-            /*
+            
             String Data = DataEm.getText().replaceAll("[/]", "");
         
-            nfegs.setBaseicms_st(TxtBICMSST.getText());
-            nfegs.setBaseicms(TxtCICMS.getText());
-            nfegs.setIdNota(TxtNF.getText());
-            nfegs.setValoricmssub(TxtSICMS.getText());
-            nfegs.setValoricms(TxtVICMS.getText());
+            nfegs.setBaseicms_st(Float.parseFloat(TxtBICMSST.getText()));
+            nfegs.setBaseicms(Float.parseFloat(TxtCICMS.getText()));
+            nfegs.setIdNota(Integer.parseInt(TxtNF.getText()));
+            nfegs.setValoricmssub(Float.parseFloat(TxtSICMS.getText()));
+            nfegs.setValoricms(Float.parseFloat(TxtVICMS.getText()));
             nfegs.setValor(TxtVN.getText());
-            nfegs.set(DataEm.getText());
+            nfegs.setData(DataEm.getText());
             
-            
+            nfeDAO.Insert(nfegs);
             
             LimparCampos();
             
-            */
+            
         } catch (SQLException ex) {
             Logger.getLogger(InternalNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
         }
