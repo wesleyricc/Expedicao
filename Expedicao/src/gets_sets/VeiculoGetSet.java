@@ -12,8 +12,18 @@ package gets_sets;
 public class VeiculoGetSet {
     
     String empresa, nome, placa, chassi, capacidade, tipo;
-    Integer idTransportador;
+    Integer idTransportador, idVeiculo;
 
+    public Integer getIdVeiculo() {
+        return idVeiculo;
+    }
+
+    public void setIdVeiculo(Integer idVeiculo) {
+        this.idVeiculo = idVeiculo;
+    }
+
+    
+    
     public Integer getIdTransportador() {
         return idTransportador;
     }

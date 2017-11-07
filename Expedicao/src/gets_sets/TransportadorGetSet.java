@@ -13,7 +13,15 @@ public class TransportadorGetSet {
     
       
     String nome, cnpj, telefone;
-    Integer idEndereco;
+    Integer idEndereco, idTransportador;
+
+    public Integer getIdTransportador() {
+        return idTransportador;
+    }
+
+    public void setIdTransportador(Integer idTransportador) {
+        this.idTransportador = idTransportador;
+    }
 
     public String getNome() {
         return nome;

@@ -7,11 +7,16 @@ package telas;
 
 import dao.nfeDAO;
 import gets_sets.NFeGetSet;
+import gets_sets.TransportadorGetSet;
 import java.awt.Dimension;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,28 +28,38 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
     /**
      * Creates new form InternalNotaFiscal
      */
-    
     private NFeGetSet nfegs = new NFeGetSet();
     private nfeDAO nfeDAO = new nfeDAO();
     private DefaultTableModel modeloItensNota;
     List<NFeGetSet> NFeGS = null;
-            
-    
+    List<TransportadorGetSet> transGS;
+
     public InternalNotaFiscal() {
         initComponents();
     }
-    
+
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
 
-    
-    public void setarCampos() throws SQLException{
+    public void setarCampos() throws SQLException {
+
+        textoidNota.setText(Integer.toString(nfeDAO.numNFe()));
+        transGS = nfeDAO.carregaTransporte();
+
+        DefaultComboBoxModel modeloTransportador = new DefaultComboBoxModel();
         
-        TxtNF.setText(Integer.toString(nfeDAO.numNFe()));
+        for(int i=0; i< transGS.size(); i++){
+            
+            modeloTransportador.addElement(transGS.get(i).getNome());
+            
+        }
+        
+        comboTransporte.setModel(modeloTransportador);
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,17 +72,17 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        TxtCICMS = new javax.swing.JTextField();
-        TxtVICMS = new javax.swing.JTextField();
-        TxtSICMS = new javax.swing.JTextField();
+        textoBaseICMS = new javax.swing.JTextField();
+        textoValorICMS = new javax.swing.JTextField();
+        textoICMSSub = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        TxtNF = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        textoidNota = new javax.swing.JTextField();
+        textoOBS = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        TxtVN = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        textoValorNota = new javax.swing.JTextField();
+        comboTransporte = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         botaoFaturar = new javax.swing.JButton();
@@ -77,11 +92,13 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaNotas = new javax.swing.JTable();
         jLabel20 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        comboVeiculo = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
-        TxtBICMSST = new javax.swing.JTextField();
-        DataEm = new javax.swing.JFormattedTextField();
+        textoBaseICMSST = new javax.swing.JTextField();
+        textoData = new javax.swing.JFormattedTextField();
         botaoCancelar = new javax.swing.JButton();
+        textoIdVeiculo = new javax.swing.JTextField();
+        textoIdTransportador = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Nota Fiscal Elêtronica");
@@ -109,21 +126,21 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
 
         jLabel16.setText("Valor do ICMS Substituição:");
 
-        TxtCICMS.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoBaseICMS.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtCICMSKeyTyped(evt);
+                textoBaseICMSKeyTyped(evt);
             }
         });
 
-        TxtVICMS.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoValorICMS.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtVICMSKeyTyped(evt);
+                textoValorICMSKeyTyped(evt);
             }
         });
 
-        TxtSICMS.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoICMSSub.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtSICMSKeyTyped(evt);
+                textoICMSSubKeyTyped(evt);
             }
         });
 
@@ -131,22 +148,22 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Data Emissão:");
 
-        TxtNF.setEditable(false);
-        TxtNF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TxtNF.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoidNota.setEditable(false);
+        textoidNota.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        textoidNota.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtNFKeyTyped(evt);
+                textoidNotaKeyTyped(evt);
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        textoOBS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                textoOBSActionPerformed(evt);
             }
         });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoOBS.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
+                textoOBSKeyTyped(evt);
             }
         });
 
@@ -154,16 +171,30 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Valor Nota:");
 
-        TxtVN.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoValorNota.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtVNKeyTyped(evt);
+                textoValorNotaKeyTyped(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UPS Cargas", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        comboTransporte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Transportador" }));
+        comboTransporte.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                comboTransportePopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
+        comboTransporte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                comboTransporteMouseExited(evt);
+            }
+        });
+        comboTransporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                comboTransporteActionPerformed(evt);
             }
         });
 
@@ -231,29 +262,29 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
 
         jLabel20.setText("Veículo");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UPS Cargas", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        comboVeiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Veículo" }));
+        comboVeiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                comboVeiculoActionPerformed(evt);
             }
         });
 
         jLabel13.setText("Base de Cálculo do ICMS:");
 
-        TxtBICMSST.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoBaseICMSST.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtBICMSSTKeyTyped(evt);
+                textoBaseICMSSTKeyTyped(evt);
             }
         });
 
         try {
-            DataEm.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/##")));
+            textoData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        DataEm.addActionListener(new java.awt.event.ActionListener() {
+        textoData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DataEmActionPerformed(evt);
+                textoDataActionPerformed(evt);
             }
         });
 
@@ -263,6 +294,10 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                 botaoCancelarActionPerformed(evt);
             }
         });
+
+        textoIdVeiculo.setEditable(false);
+
+        textoIdTransportador.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -274,34 +309,29 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                         .addGap(32, 32, 32)
                         .addComponent(jLabel10)
                         .addGap(10, 10, 10)
-                        .addComponent(TxtNF, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textoidNota, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(159, 159, 159)
                         .addComponent(jLabel14)
                         .addGap(26, 26, 26)
-                        .addComponent(TxtBICMSST, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textoBaseICMSST, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addComponent(jLabel12)
                         .addGap(10, 10, 10)
-                        .addComponent(DataEm, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textoData, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(71, 71, 71)
                         .addComponent(jLabel13)
                         .addGap(26, 26, 26)
-                        .addComponent(TxtCICMS, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textoBaseICMS, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
-                        .addComponent(TxtVN, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textoValorNota, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60)
                         .addComponent(jLabel16)
                         .addGap(26, 26, 26)
-                        .addComponent(TxtSICMS, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel15)
-                        .addGap(18, 18, 18)
-                        .addComponent(TxtVICMS, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textoICMSSub, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -309,7 +339,7 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jLabel17)
                         .addGap(30, 30, 30)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textoOBS, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(220, 220, 220)
                         .addComponent(botaoFaturar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -319,30 +349,40 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                         .addComponent(botaoCancelar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
+                        .addComponent(jLabel19)
+                        .addGap(10, 10, 10)
+                        .addComponent(textoNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(botaoPesquisar)
+                        .addGap(141, 141, 141)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel20))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel19)
-                                .addGap(10, 10, 10)
-                                .addComponent(textoNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(botaoPesquisar)
-                                .addGap(195, 195, 195)
-                                .addComponent(jLabel20)
-                                .addGap(10, 10, 10)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(comboTransporte, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textoIdTransportador, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addGap(10, 10, 10)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(10, 10, 10))
+                                .addComponent(comboVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textoIdVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(10, 20, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(jLabel15)
+                .addGap(18, 18, 18)
+                .addComponent(textoValorICMS, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TxtNF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TxtBICMSST, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoidNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoBaseICMSST, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,39 +393,38 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel12))
-                    .addComponent(DataEm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(TxtCICMS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(textoBaseICMS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel11))
-                    .addComponent(TxtVN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoValorNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(jLabel16))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(7, 7, 7)
-                        .addComponent(TxtSICMS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(textoICMSSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel15))
-                    .addComponent(TxtVICMS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoValorICMS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboTransporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoIdTransportador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel18))
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -394,149 +433,146 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addComponent(textoNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(botaoPesquisar)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel20)))
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botaoFaturar)
-                            .addComponent(botaoLimpar)
-                            .addComponent(botaoCancelar)))
+                            .addComponent(botaoPesquisar)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(comboVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textoIdVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel20))))
+                .addGap(6, 6, 6)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17)
+                    .addComponent(textoOBS, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoFaturar)
+                    .addComponent(botaoLimpar)
+                    .addComponent(botaoCancelar)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void textoOBSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoOBSActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_textoOBSActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void comboTransporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTransporteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_comboTransporteActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void comboVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVeiculoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_comboVeiculoActionPerformed
 
     private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
-        
-        
 
-            String nomeCliente = textoNomeCliente.getText();
-            
-            
+        textoData.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
+        String nomeCliente = textoNomeCliente.getText();
+
         try {
             NFeGS = nfeDAO.buscarCliente(nomeCliente);
         } catch (SQLException ex) {
             Logger.getLogger(InternalNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
         }
-                               
-            textoNomeCliente.setText(NFeGS.get(0).getNomeCliente());
 
-            modeloItensNota = (DefaultTableModel) tabelaNotas.getModel();
+        textoNomeCliente.setText(NFeGS.get(0).getNomeCliente());
 
-            for (int i = 0; i < NFeGS.size(); i++) {
-  
-                    modeloItensNota.addRow(new Object[]{NFeGS.get(i).getIdPedido(), NFeGS.get(i).getDescpedido(), NFeGS.get(i).getQuantidade()});
-                }
+        modeloItensNota = (DefaultTableModel) tabelaNotas.getModel();
 
-            
-            
-            tabelaNotas.setModel(modeloItensNota);
+        for (int i = 0; i < NFeGS.size(); i++) {
+
+            modeloItensNota.addRow(new Object[]{NFeGS.get(i).getIdPedido(), NFeGS.get(i).getDescpedido(), NFeGS.get(i).getQuantidade()});
+        }
+
+        tabelaNotas.setModel(modeloItensNota);
 
     }//GEN-LAST:event_botaoPesquisarActionPerformed
 
-    private void TxtNFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtNFKeyTyped
+    private void textoidNotaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoidNotaKeyTyped
         String caracteres = "0987654321";
         if (!caracteres.contains(evt.getKeyChar() + "")) {
             evt.consume();
         }
         int limit = 50;
 
-        if (TxtNF.getText().length() == limit) {
+        if (textoidNota.getText().length() == limit) {
 
             evt.consume();
         }
-    }//GEN-LAST:event_TxtNFKeyTyped
+    }//GEN-LAST:event_textoidNotaKeyTyped
 
-    private void TxtVNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtVNKeyTyped
+    private void textoValorNotaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoValorNotaKeyTyped
         String caracteres = "0987654321";
         if (!caracteres.contains(evt.getKeyChar() + "")) {
             evt.consume();
         }
         int limit = 50;
 
-        if (TxtVN.getText().length() == limit) {
+        if (textoValorNota.getText().length() == limit) {
 
             evt.consume();
-        } 
-    }//GEN-LAST:event_TxtVNKeyTyped
+        }
+    }//GEN-LAST:event_textoValorNotaKeyTyped
 
-    private void TxtVICMSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtVICMSKeyTyped
+    private void textoValorICMSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoValorICMSKeyTyped
         String caracteres = "0987654321";
         if (!caracteres.contains(evt.getKeyChar() + "")) {
             evt.consume();
         }
         int limit = 50;
 
-        if (TxtVICMS.getText().length() == limit) {
+        if (textoValorICMS.getText().length() == limit) {
 
             evt.consume();
         }
-    }//GEN-LAST:event_TxtVICMSKeyTyped
+    }//GEN-LAST:event_textoValorICMSKeyTyped
 
-    private void TxtBICMSSTKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtBICMSSTKeyTyped
-        
+    private void textoBaseICMSSTKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoBaseICMSSTKeyTyped
+
         String caracteres = "0987654321";
         if (!caracteres.contains(evt.getKeyChar() + "")) {
             evt.consume();
         }
         int limit = 50;
 
-        if (TxtBICMSST.getText().length() == limit) {
+        if (textoBaseICMSST.getText().length() == limit) {
 
             evt.consume();
         }
-    }//GEN-LAST:event_TxtBICMSSTKeyTyped
+    }//GEN-LAST:event_textoBaseICMSSTKeyTyped
 
-    private void TxtCICMSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtCICMSKeyTyped
-        
+    private void textoBaseICMSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoBaseICMSKeyTyped
+
         String caracteres = "0987654321";
         if (!caracteres.contains(evt.getKeyChar() + "")) {
             evt.consume();
         }
         int limit = 50;
 
-        if (TxtCICMS.getText().length() == limit) {
+        if (textoBaseICMS.getText().length() == limit) {
 
             evt.consume();
         }
-    }//GEN-LAST:event_TxtCICMSKeyTyped
+    }//GEN-LAST:event_textoBaseICMSKeyTyped
 
-    private void TxtSICMSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtSICMSKeyTyped
-        
+    private void textoICMSSubKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoICMSSubKeyTyped
+
         String caracteres = "0987654321";
         if (!caracteres.contains(evt.getKeyChar() + "")) {
             evt.consume();
         }
         int limit = 50;
 
-        if (TxtSICMS.getText().length() == limit) {
+        if (textoICMSSub.getText().length() == limit) {
 
             evt.consume();
         }
-    }//GEN-LAST:event_TxtSICMSKeyTyped
+    }//GEN-LAST:event_textoICMSSubKeyTyped
 
     private void textoNomeClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoNomeClienteKeyTyped
         String caracteres = "0987654321";
@@ -551,13 +587,13 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_textoNomeClienteKeyTyped
 
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+    private void textoOBSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoOBSKeyTyped
         int limit = 300;
 
         if (textoNomeCliente.getText().length() == limit) {
 
             evt.consume();
-        }    }//GEN-LAST:event_jTextField1KeyTyped
+        }    }//GEN-LAST:event_textoOBSKeyTyped
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
         LimparCampos();
@@ -573,73 +609,103 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoFaturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFaturarActionPerformed
+
+        //setarCampos();
         
+        int linha = tabelaNotas.getSelectedRow();
+        
+
+        textoValorNota.setText(NFeGS.get(linha).getValor());
+
+        nfegs.setNomeCliente(textoNomeCliente.getText());
+        nfegs.setIdCliente(NFeGS.get(linha).getIdCliente());
+        nfegs.setIdPedido(NFeGS.get(linha).getIdPedido());
+        nfegs.setIdPedidoItens(NFeGS.get(linha).getIdPedidoItens());
+        nfegs.setBaseicms_st(Float.parseFloat(textoBaseICMSST.getText()));
+        nfegs.setBaseicms(Float.parseFloat(textoBaseICMS.getText()));
+        nfegs.setIdNota(Integer.parseInt(textoidNota.getText()));
+        nfegs.setValoricmssub(Float.parseFloat(textoICMSSub.getText()));
+        nfegs.setValoricms(Float.parseFloat(textoValorICMS.getText()));
+        nfegs.setValor(textoValorNota.getText());
+        nfegs.setData(textoData.getText());
+        nfegs.setObs(textoOBS.getText());
+        nfegs.setIdTransportador(1);
+        nfegs.setIdVeiculo(1);
+        
+
+        nfeDAO.Insert(nfegs);
+
+        LimparCampos();
+
+    }//GEN-LAST:event_botaoFaturarActionPerformed
+
+    private void textoDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoDataActionPerformed
+
+    private void tabelaNotasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaNotasMouseClicked
+
+        int linha = tabelaNotas.getSelectedRow();
+        int pedido = Integer.parseInt(tabelaNotas.getValueAt(linha, 0).toString());
+
+        textoValorNota.setText(NFeGS.get(linha).getValor());
+        float valor = Float.parseFloat(textoValorNota.getText());
+        textoBaseICMS.setText(valor + "");
+        float valorICMS = valor * 17 / 100;
+
+        textoValorICMS.setText(valorICMS + "");
+        textoBaseICMSST.setText(0 + "");
+        textoICMSSub.setText(0 + "");
+
+
+    }//GEN-LAST:event_tabelaNotasMouseClicked
+
+    private void comboTransporteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboTransporteMouseExited
+
+
+    }//GEN-LAST:event_comboTransporteMouseExited
+
+    private void comboTransportePopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_comboTransportePopupMenuWillBecomeInvisible
+
+        
+       //DefaultComboBoxModel modeloVeiculos = new DefaultComboBoxModel();
+        
+        for(int i=0; i< transGS.size(); i++){
+                    
+            textoIdTransportador.setText(transGS.get(i).getIdTransportador().toString());
+            
+        }
+               
+        /*Vector veiculos = null;
+
         try {
-            setarCampos();
-            
-            
-            String Data = DataEm.getText().replaceAll("[/]", "");
-        
-            nfegs.setBaseicms_st(Float.parseFloat(TxtBICMSST.getText()));
-            nfegs.setBaseicms(Float.parseFloat(TxtCICMS.getText()));
-            nfegs.setIdNota(Integer.parseInt(TxtNF.getText()));
-            nfegs.setValoricmssub(Float.parseFloat(TxtSICMS.getText()));
-            nfegs.setValoricms(Float.parseFloat(TxtVICMS.getText()));
-            nfegs.setValor(TxtVN.getText());
-            nfegs.setData(DataEm.getText());
-            
-            nfeDAO.Insert(nfegs);
-            
-            LimparCampos();
-            
-            
+            veiculos = nfeDAO.carregaVeiculos(comboTransporte.getSelectedItem().toString());
         } catch (SQLException ex) {
             Logger.getLogger(InternalNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_botaoFaturarActionPerformed
 
-    private void DataEmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataEmActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DataEmActionPerformed
+        DefaultComboBoxModel modeloVeiculo = new DefaultComboBoxModel(veiculos);
+        comboVeiculo.setModel(modeloVeiculo);*/
+    }//GEN-LAST:event_comboTransportePopupMenuWillBecomeInvisible
 
-    private void tabelaNotasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaNotasMouseClicked
-        
-        int linha = tabelaNotas.getSelectedRow();
-        int pedido = Integer.parseInt(tabelaNotas.getValueAt(linha, 0).toString());
-        
-        TxtVN.setText(NFeGS.get(linha).getValor());
-        
-    }//GEN-LAST:event_tabelaNotasMouseClicked
+    public void LimparCampos() {
 
-    
-    public void LimparCampos(){
-        
-        TxtNF.setText("");
-        TxtCICMS.setText("");
-        TxtBICMSST.setText("");
-        TxtSICMS.setText("");
-        TxtVICMS.setText("");
-        TxtVN.setText("");
-        
-        
-        
-        
+        textoidNota.setText("");
+        textoBaseICMS.setText("");
+        textoBaseICMSST.setText("");
+        textoICMSSub.setText("");
+        textoValorICMS.setText("");
+        textoValorNota.setText("");
+
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField DataEm;
-    private javax.swing.JTextField TxtBICMSST;
-    private javax.swing.JTextField TxtCICMS;
-    private javax.swing.JTextField TxtNF;
-    private javax.swing.JTextField TxtSICMS;
-    private javax.swing.JTextField TxtVICMS;
-    private javax.swing.JTextField TxtVN;
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoFaturar;
     private javax.swing.JButton botaoLimpar;
     private javax.swing.JButton botaoPesquisar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> comboTransporte;
+    private javax.swing.JComboBox<String> comboVeiculo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -652,8 +718,17 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabelaNotas;
+    private javax.swing.JTextField textoBaseICMS;
+    private javax.swing.JTextField textoBaseICMSST;
+    private javax.swing.JFormattedTextField textoData;
+    private javax.swing.JTextField textoICMSSub;
+    private javax.swing.JTextField textoIdTransportador;
+    private javax.swing.JTextField textoIdVeiculo;
     private javax.swing.JTextField textoNomeCliente;
+    private javax.swing.JTextField textoOBS;
+    private javax.swing.JTextField textoValorICMS;
+    private javax.swing.JTextField textoValorNota;
+    private javax.swing.JTextField textoidNota;
     // End of variables declaration//GEN-END:variables
 }

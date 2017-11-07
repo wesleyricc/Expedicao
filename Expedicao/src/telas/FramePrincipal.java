@@ -197,6 +197,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
 
         painelPrincipal.remove(notafiscal);
         painelPrincipal.add(notafiscal);

@@ -246,6 +246,6 @@ public class CargasDAO {
         conn.close();
 
         return transporte;
-    }
-
+    }    
+    
 }
