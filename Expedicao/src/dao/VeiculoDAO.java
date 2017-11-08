@@ -105,6 +105,7 @@ public class VeiculoDAO {
             conn = Conexao.getConnection();
             String sql = "INSERT INTO veiculos (Nome, Placa, Chassi, Capacidade, Tipo, idTransportador) VALUES (?, ?, ?, ?, ?, ?)";
             ps = conn.prepareStatement(sql);
+            ResultSet rs = null;
 
             ps.setString(1, vei.getNome());
             ps.setString(2, vei.getPlaca());
@@ -114,6 +115,23 @@ public class VeiculoDAO {
             ps.setInt(6, vei.getIdTransportador());
 
             ps.execute();
+            
+            sql = "select max(idVeiculos) from veiculos";
+            ps = conn.prepareStatement(sql);
+            ps.execute();
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                vei.setIdVeiculo(rs.getInt("max(idVeiculos)"));
+            }
+            
+            
+            sql = "INSERT INTO transportador_has_veiculos (idTransportador, idVeiculos) VALUES (?,?)";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, vei.getIdTransportador());
+            ps.setInt(2, vei.getIdVeiculo());
+            ps.execute();
+            
+            
 
         } catch (SQLException ex) {
             Logger.getLogger(TransportadorDAO.class.getName()).log(Level.SEVERE, null, ex);

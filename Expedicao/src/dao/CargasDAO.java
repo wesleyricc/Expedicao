@@ -80,19 +80,21 @@ public class CargasDAO {
         List<CargasGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome "
-                + "from clientes as c "
-                + "join endereco as endr "
-                + "join transportador as t "
-                + "join nota_fiscal as nf "
-                + "join pedidos as p "
-                + "join clientes_has_pedidos as cp "
-                + "where nf.idClientes = c.idClientes and "
-                + "nf.idPedidos = p.idPedidos and "
-                + "nf.idTransportador = t.idTransportador and "
-                + "endr.idEndereco = c.idEndereco and "
-                + "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) "
-                + "GROUP by nf.idNota_Fiscal";
+        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome " +
+                    "from clientes as c " +
+                    "join endereco as endr " +
+                    "join transportador as t " +
+                    "join nota_fiscal as nf " +
+                    "join pedidos as p " +
+                    "join clientes_has_pedidos as cp " +
+                    "join pedidos_itens as pi " +
+                    "where nf.idClientes = c.idClientes and " +
+                    "nf.idPedidos = p.idPedidos and " +
+                    "nf.idTransportador = t.idTransportador and " +
+                    "endr.idEndereco = c.idEndereco and " +
+                    "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) and " +
+                    "nf.idClientes = c.idClientes and cp.idPedidos = p.idPedidos and " +
+                    "cp.idPedidos_Itens = pi.idPedidos_Itens";
         ps = conn.prepareStatement(sql);
         rs = ps.executeQuery();
 
@@ -177,7 +179,8 @@ public class CargasDAO {
                 + "nf.idPedidos = p.idPedidos and "
                 + "nf.idTransportador = t.idTransportador and "
                 + "endr.idEndereco = c.idEndereco "
-                + "GROUP BY endr.Cidade";
+                + "GROUP BY endr.Cidade "
+                + "ORDER BY endr.Cidade";
 
         ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();

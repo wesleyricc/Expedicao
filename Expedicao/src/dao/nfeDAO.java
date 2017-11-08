@@ -5,7 +5,6 @@
  */
 package dao;
 
-import gets_sets.CargasGetSet;
 import gets_sets.NFeGetSet;
 import gets_sets.TransportadorGetSet;
 import gets_sets.VeiculoGetSet;
@@ -27,7 +26,7 @@ import java.util.logging.Logger;
  * @author Wesley Ricardo
  */
 public class nfeDAO {
-    
+
     public List<NFeGetSet> buscarCliente(String cliente) throws SQLException {
         ResultSet rs = null;
         Connection conn = null;
@@ -36,19 +35,19 @@ public class nfeDAO {
         List<NFeGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "select c.idClientes, c.Nome, p.idPedidos, pi.idPedidos_Itens, pa.Descricao, pi.Quantidade, pi.Valor " +
-                    "from clientes as c " +
-                    "join pedidos as p " +
-                    "join pedidos_itens as pi " +
-                    "join produto_acabado as pa " +
-                    "join clientes_has_pedidos as cp " +
-                    "join nota_fiscal as nf " +
-                    "where cp.idClientes = c.idClientes and " +
-                    "cp.idPedidos = p.idPedidos and " +
-                    "cp.idPedidos_Itens = cp.idPedidos_Itens and " +
-                    "pa.idProduto_Acabado = pi.idProduto_Acabado and " +
-                    "pi.idPedidos_Itens = cp.idPedidos_Itens and " +
-                    "c.Nome like ? limit 1";
+        String sql = "select c.idClientes, c.Nome, p.idPedidos, pi.idPedidos_Itens, pa.Descricao, pi.Quantidade, pi.Valor "
+                + "from clientes as c "
+                + "join pedidos as p "
+                + "join pedidos_itens as pi "
+                + "join produto_acabado as pa "
+                + "join clientes_has_pedidos as cp "
+                + "join nota_fiscal as nf "
+                + "where cp.idClientes = c.idClientes and "
+                + "cp.idPedidos = p.idPedidos and "
+                + "cp.idPedidos_Itens = cp.idPedidos_Itens and "
+                + "pa.idProduto_Acabado = pi.idProduto_Acabado and "
+                + "pi.idPedidos_Itens = cp.idPedidos_Itens and "
+                + "c.Nome like ? limit 1";
         ps = conn.prepareStatement(sql);
         ps.setString(1, "%" + cliente + "%");
         rs = ps.executeQuery();
@@ -63,7 +62,7 @@ public class nfeDAO {
             nfegs.setDescpedido(rs.getString("Descricao"));
             nfegs.setQuantidade(rs.getInt("Quantidade"));
             nfegs.setValor(rs.getString("Valor"));
-            
+
             listaNFe.add(nfegs);
 
         }
@@ -72,7 +71,7 @@ public class nfeDAO {
 
         return listaNFe;
     }
-    
+
     public int numNFe() throws SQLException {
 
         ResultSet rs = null;
@@ -90,7 +89,7 @@ public class nfeDAO {
 
         return 0;
     }
-    
+
     public void Insert(NFeGetSet nfe) {
 
         Connection conn = null;
@@ -122,7 +121,7 @@ public class nfeDAO {
             ps.setFloat(11, nfe.getValoricms());
             ps.setFloat(12, nfe.getValoricmssub());
             ps.setInt(13, nfe.getIdVeiculo());
-            
+
             ps.execute();
 
             // conn.commit();
@@ -131,13 +130,12 @@ public class nfeDAO {
         }
 
     }
-    
-    
+
     public List<TransportadorGetSet> carregaTransporte() throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
-        List<TransportadorGetSet> veiculo = new ArrayList<>();
-           
+        List<TransportadorGetSet> transp = new ArrayList<>();
+
         conn = Conexao.getConnection();
         String sql = "SELECT t.Nome, t.idTransportador FROM transportador as t";
 
@@ -148,38 +146,46 @@ public class nfeDAO {
 
             transpgs.setNome(rs.getString("Nome"));
             transpgs.setIdTransportador(rs.getInt("idTransportador"));
-            
-             veiculo.add(transpgs);
+
+            transp.add(transpgs);
+
+        }
+        rs.close();
+        conn.close();
+
+        return transp;
+    }
+
+    public List<VeiculoGetSet> carregaVeiculo(String transporte) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        List<VeiculoGetSet> veiculo = new ArrayList<>();
+
+        conn = Conexao.getConnection();
+        String sql = "SELECT v.Nome, v.idVeiculos "
+                + "FROM veiculos as v "
+                + "join transportador_has_veiculos as tv "
+                + "join transportador as t "
+                + "where tv.idVeiculos = v.idVeiculos and "
+                + "tv.idTransportador = t.idTransportador and "
+                + "t.Nome = ?";
+
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, transporte);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            VeiculoGetSet veigs = new VeiculoGetSet();
+
+            veigs.setNome(rs.getString("Nome"));
+            veigs.setIdVeiculo(rs.getInt("idVeiculos"));
+
+            veiculo.add(veigs);
 
         }
         rs.close();
         conn.close();
 
         return veiculo;
-    }
-    
-    public Vector carregaVeiculos(String transportador) throws SQLException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        Vector transporte = new Vector();
-
-        conn = Conexao.getConnection();
-        String sql = "SELECT v.Nome " +
-                    "FROM veiculos AS v " +
-                    "JOIN transportador as t " +
-                    "WHERE v.idTransportador = t.idTransportador AND " +
-                    "t.Nome = ?";
-
-        ps = conn.prepareStatement(sql);
-         ps.setString(1, transportador);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            transporte.add(rs.getString("Nome"));
-        }
-        rs.close();
-        conn.close();
-
-        return transporte;
     }
 
 }

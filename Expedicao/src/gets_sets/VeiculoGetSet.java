@@ -23,7 +23,6 @@ public class VeiculoGetSet {
     }
 
     
-    
     public Integer getIdTransportador() {
         return idTransportador;
     }
