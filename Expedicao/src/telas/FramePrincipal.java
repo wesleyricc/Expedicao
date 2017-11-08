@@ -41,6 +41,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jMenu1 = new javax.swing.JMenu();
         painelPrincipal = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
         barraMenu = new javax.swing.JMenuBar();
         menuFaturamento = new javax.swing.JMenu();
         menuNFeFaturamento = new javax.swing.JMenuItem();
@@ -60,15 +61,25 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         painelPrincipal.setBackground(new java.awt.Color(0, 102, 102));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/truck-brown-icon.png"))); // NOI18N
+
+        painelPrincipal.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout painelPrincipalLayout = new javax.swing.GroupLayout(painelPrincipal);
         painelPrincipal.setLayout(painelPrincipalLayout);
         painelPrincipalLayout.setHorizontalGroup(
             painelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 898, Short.MAX_VALUE)
+            .addGroup(painelPrincipalLayout.createSequentialGroup()
+                .addGap(433, 433, 433)
+                .addComponent(jLabel1)
+                .addContainerGap(433, Short.MAX_VALUE))
         );
         painelPrincipalLayout.setVerticalGroup(
             painelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 499, Short.MAX_VALUE)
+            .addGroup(painelPrincipalLayout.createSequentialGroup()
+                .addGap(190, 190, 190)
+                .addComponent(jLabel1)
+                .addContainerGap(190, Short.MAX_VALUE))
         );
 
         menuFaturamento.setText("Faturamento");
@@ -261,6 +272,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu menuCadastrar;
     private javax.swing.JMenu menuCargas;

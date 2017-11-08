@@ -438,7 +438,7 @@ public class InternalCadastroTransportador extends javax.swing.JInternalFrame {
         }
         int limit = 2;
 
-        if (textoRua.getText().length() == limit) {
+        if (textoEstado.getText().length() == limit) {
 
             evt.consume();
         }
