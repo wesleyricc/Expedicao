@@ -80,6 +80,8 @@ public class InternalRotas extends javax.swing.JInternalFrame {
         comboVeiculo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         botaoVisualizar = new javax.swing.JButton();
+        botaoEncerrar = new javax.swing.JButton();
+        botaoCancelar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -132,6 +134,20 @@ public class InternalRotas extends javax.swing.JInternalFrame {
             }
         });
 
+        botaoEncerrar.setText("Encerrar Carga");
+        botaoEncerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEncerrarActionPerformed(evt);
+            }
+        });
+
+        botaoCancelar.setText("Cancelar");
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -154,6 +170,12 @@ public class InternalRotas extends javax.swing.JInternalFrame {
                         .addComponent(botaoVisualizar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(179, 179, 179)
+                .addComponent(botaoEncerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,15 +189,17 @@ public class InternalRotas extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(comboVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(comboVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(botaoVisualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(botaoVisualizar)))
                 .addGap(69, 69, 69)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoEncerrar)
+                    .addComponent(botaoCancelar))
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -202,6 +226,7 @@ public class InternalRotas extends javax.swing.JInternalFrame {
     private void botaoVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVisualizarActionPerformed
         
         
+        modeloRotas.setNumRows(0);
         try {
             String transporte = (String) comboTransportador.getSelectedItem();
             String veiculo = (String) comboVeiculo.getSelectedItem();
@@ -223,8 +248,34 @@ public class InternalRotas extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_botaoVisualizarActionPerformed
 
+    private void botaoEncerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEncerrarActionPerformed
+        
+        int linha = tabelaRotas.getSelectedRow();
+        Integer idCarga = Integer.parseInt(tabelaRotas.getValueAt(linha, 0).toString());
+        
+        try {
+            rotasDAO.atualizarCarga(idCarga);
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalRotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        modeloRotas.removeRow(linha);
+        
+        tabelaRotas.setModel(modeloRotas);
+        
+        
+    }//GEN-LAST:event_botaoEncerrarActionPerformed
+
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        
+        this.dispose();
+        
+    }//GEN-LAST:event_botaoCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoCancelar;
+    private javax.swing.JButton botaoEncerrar;
     private javax.swing.JButton botaoVisualizar;
     private javax.swing.JComboBox<String> comboTransportador;
     private javax.swing.JComboBox<String> comboVeiculo;

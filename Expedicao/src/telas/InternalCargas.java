@@ -74,6 +74,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         botaoSubir = new javax.swing.JButton();
         botaoDescer = new javax.swing.JButton();
         botaoNFeGeral = new javax.swing.JButton();
+        botaoCancelar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Gerenciar Cargas");
@@ -211,34 +212,19 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             }
         });
 
+        botaoCancelar.setText("Cancelar");
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(305, 305, 305)
-                                .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(idCargaNum, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(botaoSubir, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                            .addComponent(botaoDescer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addComponent(botaoConfirmarCarga))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -263,7 +249,31 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                                 .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)))))
+                                .addGap(39, 39, 39))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(305, 305, 305)
+                                .addComponent(jLabel6))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(idCargaNum, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(156, 156, 156)
+                                .addComponent(botaoConfirmarCarga)
+                                .addGap(34, 34, 34)
+                                .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(botaoSubir, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                            .addComponent(botaoDescer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -314,8 +324,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel6))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(botaoConfirmarCarga)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoConfirmarCarga)
+                    .addComponent(botaoCancelar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -554,9 +566,16 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_botaoNFeGeralActionPerformed
 
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        
+         this.dispose();
+        
+    }//GEN-LAST:event_botaoCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
+    private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoConfirmarCarga;
     private javax.swing.JButton botaoDescer;
     private javax.swing.JButton botaoNFeGeral;

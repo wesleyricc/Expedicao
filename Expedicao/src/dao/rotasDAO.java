@@ -129,9 +129,12 @@ public class rotasDAO {
                     "join cargas_has_nota_fiscal as cnf " +
                     "join veiculos as v " +
                     "join nota_fiscal as nf " +
+                    "join cargas as c " +
                     "where v.Nome = ? and " +
                     "t.Nome = ? and " +
+                    "c.sit = 'Liberado' and " +
                     "r.idCargas = cnf.idCargas and " +
+                    "c.idCargas = r.idCargas and " +
                     "cnf.idNota_Fiscal = nf.idNota_Fiscal and " +
                     "nf.idTransportador = t.idTransportador and " +
                     "nf.idVeiculo = v.idVeiculos " +
@@ -157,5 +160,46 @@ public class rotasDAO {
         return listaRota;
 
     }
+    
+    public void atualizarCarga(Integer idCarga) throws SQLException {
 
-}
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = Conexao.getConnection();
+            String sql = "update cargas set sit = 'Encerrado' where idCargas = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCarga);
+            ps.execute();
+
+//            conn.commit();
+        } catch (SQLException e) {
+            Logger.getLogger(rotasDAO.class.getName()).log(Level.SEVERE, null, e);
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    Logger.getLogger(rotasDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(rotasDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(rotasDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    }
+

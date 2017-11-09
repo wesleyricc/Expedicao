@@ -84,11 +84,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuVisualizarRotasActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuBaixaRotas">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Baixas"/>
-              </Properties>
-            </MenuItem>
           </SubComponents>
         </Menu>
       </SubComponents>

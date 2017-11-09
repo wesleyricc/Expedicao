@@ -53,7 +53,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         menuVisualizarCargas = new javax.swing.JMenuItem();
         menuRotas = new javax.swing.JMenu();
         menuVisualizarRotas = new javax.swing.JMenuItem();
-        menuBaixaRotas = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -139,9 +138,6 @@ public class FramePrincipal extends javax.swing.JFrame {
             }
         });
         menuRotas.add(menuVisualizarRotas);
-
-        menuBaixaRotas.setText("Baixas");
-        menuRotas.add(menuBaixaRotas);
 
         barraMenu.add(menuRotas);
 
@@ -278,7 +274,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuItem menuBaixaRotas;
     private javax.swing.JMenu menuCadastrar;
     private javax.swing.JMenu menuCargas;
     private javax.swing.JMenu menuFaturamento;
