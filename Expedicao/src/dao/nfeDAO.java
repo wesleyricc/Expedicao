@@ -35,19 +35,19 @@ public class nfeDAO {
         List<NFeGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "select c.idClientes, c.Nome, p.idPedidos, pi.idPedidos_Itens, pa.Descricao, pi.Quantidade, pi.Valor "
-                + "from clientes as c "
-                + "join pedidos as p "
-                + "join pedidos_itens as pi "
-                + "join produto_acabado as pa "
-                + "join clientes_has_pedidos as cp "
-                + "join nota_fiscal as nf "
-                + "where cp.idClientes = c.idClientes and "
-                + "cp.idPedidos = p.idPedidos and "
-                + "cp.idPedidos_Itens = cp.idPedidos_Itens and "
-                + "pa.idProduto_Acabado = pi.idProduto_Acabado and "
-                + "pi.idPedidos_Itens = cp.idPedidos_Itens and "
-                + "c.Nome like ? limit 1";
+        String sql = "select c.idClientes, c.Nome, p.idPedidos, pi.idPedidos_Itens, pa.Descricao, pi.Quantidade, pi.Valor " +
+                    "from clientes as c " +
+                    "join pedidos as p " +
+                    "join pedidos_itens as pi " +
+                    "join produto_acabado as pa " +
+                    "join clientes_has_pedidos as cp " +
+                    "join nota_fiscal as nf " +
+                    "where cp.idClientes = c.idClientes and " +
+                    "nf.idClientes = cp.idClientes and " +
+                    "cp.idPedidos = p.idPedidos and " +
+                    "cp.idPedidos_Itens = pi.idPedidos_Itens and " +
+                    "pi.idProduto_Acabado = pa.idProduto_Acabado and " +
+                    "c.Nome like ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, "%" + cliente + "%");
         rs = ps.executeQuery();

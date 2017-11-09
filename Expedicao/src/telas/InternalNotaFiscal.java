@@ -57,6 +57,7 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
             modeloTransportador.addElement(transGS.get(i).getNome());
 
         }
+        
 
         comboTransporte.setModel(modeloTransportador);
 
@@ -640,7 +641,7 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         }
 
         nfeDAO.Insert(nfegs);
-
+        modeloItensNota.setNumRows(0);
         LimparCampos();
 
     }//GEN-LAST:event_botaoFaturarActionPerformed

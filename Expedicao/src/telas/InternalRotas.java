@@ -203,15 +203,11 @@ public class InternalRotas extends javax.swing.JInternalFrame {
 
     private void botaoVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVisualizarActionPerformed
         
-            /*String transporte = (String) comboTransportador.getSelectedItem();
+            String transporte = (String) comboTransportador.getSelectedItem();
             String veiculo = (String) comboVeiculo.getSelectedItem();
 
-            List<RotasGetSet> listaRotas;
-        try {
-            listaRotas = rotasDAO.getRotas(transporte, veiculo);
-        } catch (SQLException ex) {
-            Logger.getLogger(InternalRotas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            List<RotasGetSet> listaRotas = rotasDAO.getRotas(transporte, veiculo);
+       
    
             modeloRotas = (DefaultTableModel) tabelaRotas.getModel();
 
@@ -222,7 +218,7 @@ public class InternalRotas extends javax.swing.JInternalFrame {
                     modeloRotas.addRow(new Object[]{listaRotas.get(i).getIdCarga(), listaRotas.get(i).getListaCidadeString(), listaRotas.get(i).getIdRota()});
                 
 
-            }*/
+            }
 
     }//GEN-LAST:event_botaoVisualizarActionPerformed
 

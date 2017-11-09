@@ -32,7 +32,7 @@ public class CargasDAO {
         List<CargasGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome, v.Nome 'NomeVeiculo' " +
+        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome 'NomeTransportador', v.Nome 'NomeVeiculo' " +
                     "from clientes as c " +
                     "join endereco as endr " +
                     "join transportador as t " +

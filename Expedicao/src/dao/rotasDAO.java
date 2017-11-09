@@ -121,29 +121,47 @@ public class rotasDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        List<RotasGetSet> listaRotas = new ArrayList<>();
+        List<RotasGetSet> listaRota = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "SELECT nf.idNota_Fiscal, c.Nome";
-              
+        String sql = "select r.idRotas, r.Cidades, r.idCargas " +
+                    "from rotas as r " +
+                    "join cargas_has_nota_fiscal as cf\n" +
+                    "join nota_fiscal as nf " +
+                    "join cargas as c " +
+                    "join transportador as t " +
+                    "join transportador_has_veiculos as tv " +
+                    "join veiculos as v " +
+                    "where r.idCargas = cf.idCargas and " +
+                    "cf.idNota_Fiscal = nf.idNota_Fiscal and " +
+                    "nf.idTransportador = t.idTransportador and " +
+                    "nf.idVeiculo = v.idVeiculos and " +
+                    "tv.idTransportador = t.idTransportador and " +
+                    "tv.idVeiculos = v.idVeiculos and " +
+                    "v.Nome = ?";
+                
         ps = conn.prepareStatement(sql);
-        ps.setString(1, v);
-        ps.setString(2, t);
+        ps.setString(1, t);
+        ps.setString(2, v);
         rs = ps.executeQuery();
 
         while (rs.next()) {
             RotasGetSet rotags = new RotasGetSet();
 
-            rotags.setIdRota(rs.getInt("idRotas"));
-            rotags.setListaCidadeString(rs.getString("Cidades"));
-            rotags.setIdCarga(rs.getInt("idCargas"));
+            //nfegs.setId_Nota_Fiscal(rs.getInt("idnota_fiscal"));
+            //nfegs.setTextoCidade(rs.getString("cidade"));
+            //nfegs.setTextoCliente(rs.getString("nome"));
+            //nfegs.setTextoLogradouro(rs.getString("logradouro"));
+            //nfegs.setTransportador(rs.getString("NomeTransportador"));
+            //nfegs.setTextoEstado(rs.getString("estado"));
+            //nfegs.setVeiculo(rs.getString("NomeVeiculo"));
 
-            listaRotas.add(rotags);
+            //listaNFe.add(nfegs);
         }
         rs.close();
         conn.close();
 
-        return listaRotas;
+        return listaRota;
     }
 
 }
