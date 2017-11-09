@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class CargasGetSet {
     
-    String Cliente, Rua, Cidade, Estado;
+    String Cliente, Rua, Cidade, Estado, Veiculo, Transportador;
     Integer NFe, idCarga, Numero, idRota;
 
     private Integer id_Nota_Fiscal, notasExistentes_cargas;
@@ -22,6 +22,22 @@ public class CargasGetSet {
     private String textoLogradouro;
     private String textoCidade;
     private String textoEstado;
+
+    public String getTransportador() {
+        return Transportador;
+    }
+
+    public void setTransportador(String Transportador) {
+        this.Transportador = Transportador;
+    }
+
+    public String getVeiculo() {
+        return Veiculo;
+    }
+
+    public void setVeiculo(String Veiculo) {
+        this.Veiculo = Veiculo;
+    }
     
     public Integer getNotasExistentes_cargas() {
         return notasExistentes_cargas;

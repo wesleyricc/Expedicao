@@ -14,7 +14,15 @@ public class NFeGetSet {
 
     Integer idNota, idCliente, idPedido, idVeiculo, idPedidoItens, idTransportador, quantidade;
     float baseicms, baseicms_st, valoricms, valoricmssub;
-    String obs, valor, nomeCliente, descpedido, transportador, veiculo, data;
+    String obs, valor, nomeCliente, nomeVeiculo, descpedido, transportador, veiculo, data;
+
+    public String getNomeVeiculo() {
+        return nomeVeiculo;
+    }
+
+    public void setNomeVeiculo(String nomeVeiculo) {
+        this.nomeVeiculo = nomeVeiculo;
+    }
 
     public String getData() {
         return data;

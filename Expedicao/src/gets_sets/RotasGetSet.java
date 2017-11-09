@@ -9,8 +9,25 @@ import java.util.List;
 
 public class RotasGetSet {
 
-    Integer idCarga;
+    Integer idCarga, idRota;
     List<String> cidades;
+    String listaCidadeString;
+
+    public String getListaCidadeString() {
+        return listaCidadeString;
+    }
+
+    public void setListaCidadeString(String listaCidadeString) {
+        this.listaCidadeString = listaCidadeString;
+    }
+    
+    public Integer getIdRota() {
+        return idRota;
+    }
+
+    public void setIdRota(Integer idRota) {
+        this.idRota = idRota;
+    }
 
     public Integer getIdCarga() {
         return idCarga;

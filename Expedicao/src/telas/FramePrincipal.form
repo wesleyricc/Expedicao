@@ -76,13 +76,18 @@
             <Property name="text" type="java.lang.String" value="Rotas"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="menuGerenciarRotas">
+            <MenuItem class="javax.swing.JMenuItem" name="menuVisualizarRotas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gerenciar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuGerenciarRotasActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuVisualizarRotasActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuBaixaRotas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Baixas"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>

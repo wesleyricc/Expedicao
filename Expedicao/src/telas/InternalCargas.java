@@ -61,7 +61,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         cidadeComboBox = new javax.swing.JComboBox<>();
         botaoPesquisar = new javax.swing.JButton();
         botaoAdicionar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        botaoRemover = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         idCargaNum = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -112,10 +112,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setText("Remover");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botaoRemover.setText("Remover");
+        botaoRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                botaoRemoverActionPerformed(evt);
             }
         });
 
@@ -143,7 +143,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "NFe", "Cliente", "Rua", "Cidade", "Estado"
+                "NFe", "Cliente", "Cidade", "Estado", "Transportador", "Veículo"
             }
         ));
         tabelaCargas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -158,11 +158,11 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "NFe", "Cliente", "Rua", "Cidade", "Estado"
+                "NFe", "Cliente", "Cidade", "Estado", "Transportador", "Veículo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, true, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -178,10 +178,13 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         jScrollPane5.setViewportView(tabelaNFRelacionada);
         if (tabelaNFRelacionada.getColumnModel().getColumnCount() > 0) {
             tabelaNFRelacionada.getColumnModel().getColumn(0).setResizable(false);
+            tabelaNFRelacionada.getColumnModel().getColumn(0).setPreferredWidth(20);
             tabelaNFRelacionada.getColumnModel().getColumn(1).setResizable(false);
             tabelaNFRelacionada.getColumnModel().getColumn(2).setResizable(false);
             tabelaNFRelacionada.getColumnModel().getColumn(3).setResizable(false);
+            tabelaNFRelacionada.getColumnModel().getColumn(3).setPreferredWidth(20);
             tabelaNFRelacionada.getColumnModel().getColumn(4).setResizable(false);
+            tabelaNFRelacionada.getColumnModel().getColumn(5).setResizable(false);
         }
 
         botaoSubir.setText("Subir");
@@ -259,7 +262,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(39, 39, 39)))))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -290,7 +293,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoAdicionar)
-                    .addComponent(jButton3))
+                    .addComponent(botaoRemover))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -345,7 +348,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                 }
                 if (flag) {
                     System.out.println("é diferente!");
-                    modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoLogradouro(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado()});
+                    modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado(), NFe.get(i).getTransportador(), NFe.get(i).getVeiculo()});
                 }
 
             }
@@ -371,9 +374,12 @@ public class InternalCargas extends javax.swing.JInternalFrame {
 
     }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
+        
+         modeloCargas.removeRow(tabelaCargas.getSelectedRow());
+         tabelaCargas.setModel(modeloCargas);
+        
+    }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void idCargaNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idCargaNumActionPerformed
         // TODO add your handling code here:
@@ -398,10 +404,21 @@ public class InternalCargas extends javax.swing.JInternalFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
             }
-            cidades_entrega.add(tabelaCargas.getValueAt(i, 3).toString());
+            cidades_entrega.add(tabelaCargas.getValueAt(i, 2).toString());
         }
 
         Carga.setCidades_entrega(cidades_entrega);
+        Carga.setIdCarga(Integer.parseInt(idCargaNum.getText()));
+        
+        try {
+           
+            rotasDAO.insertRotas(Carga);
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalCargas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
         
         Integer idCarga = -1;
         
@@ -439,7 +456,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
         modeloCargas = (DefaultTableModel) tabelaCargas.getModel();
         modeloNFe = (DefaultTableModel) tabelaNFRelacionada.getModel();
         if (linha != -1) {
-            modeloCargas.addRow(new Object[]{tabelaNFRelacionada.getValueAt(linha, 0), tabelaNFRelacionada.getValueAt(linha, 1), tabelaNFRelacionada.getValueAt(linha, 2), tabelaNFRelacionada.getValueAt(linha, 3), tabelaNFRelacionada.getValueAt(linha, 4)});
+            modeloCargas.addRow(new Object[]{tabelaNFRelacionada.getValueAt(linha, 0), tabelaNFRelacionada.getValueAt(linha, 1), tabelaNFRelacionada.getValueAt(linha, 2), tabelaNFRelacionada.getValueAt(linha, 3), tabelaNFRelacionada.getValueAt(linha, 4),  tabelaNFRelacionada.getValueAt(linha, 5)});
             modeloNFe.removeRow(linha);
 
             //modeloCargas.addRow((Object[]{tabelaNFRelacionada.getValueAt(linha, 0)}));
@@ -527,7 +544,7 @@ public class InternalCargas extends javax.swing.JInternalFrame {
                 }
                 if (flag) {
                     System.out.println("é diferente!");
-                    modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoLogradouro(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado()});
+                    modeloNFe.addRow(new Object[]{NFe.get(i).getId_Nota_Fiscal(), NFe.get(i).getTextoCliente(), NFe.get(i).getTextoCidade(), NFe.get(i).getTextoEstado(), NFe.get(i).getTransportador(), NFe.get(i).getVeiculo()});
                 }
 
             }
@@ -544,10 +561,10 @@ public class InternalCargas extends javax.swing.JInternalFrame {
     private javax.swing.JButton botaoDescer;
     private javax.swing.JButton botaoNFeGeral;
     private javax.swing.JButton botaoPesquisar;
+    private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaoSubir;
     private javax.swing.JComboBox<String> cidadeComboBox;
     private javax.swing.JTextField idCargaNum;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -52,7 +52,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         menuGerenciarCargas = new javax.swing.JMenuItem();
         menuVisualizarCargas = new javax.swing.JMenuItem();
         menuRotas = new javax.swing.JMenu();
-        menuGerenciarRotas = new javax.swing.JMenuItem();
+        menuVisualizarRotas = new javax.swing.JMenuItem();
+        menuBaixaRotas = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -131,13 +132,16 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         menuRotas.setText("Rotas");
 
-        menuGerenciarRotas.setText("Gerenciar");
-        menuGerenciarRotas.addActionListener(new java.awt.event.ActionListener() {
+        menuVisualizarRotas.setText("Gerenciar");
+        menuVisualizarRotas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuGerenciarRotasActionPerformed(evt);
+                menuVisualizarRotasActionPerformed(evt);
             }
         });
-        menuRotas.add(menuGerenciarRotas);
+        menuRotas.add(menuVisualizarRotas);
+
+        menuBaixaRotas.setText("Baixas");
+        menuRotas.add(menuBaixaRotas);
 
         barraMenu.add(menuRotas);
 
@@ -217,7 +221,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         notafiscal.setPosicao();
     }//GEN-LAST:event_menuNFeFaturamentoActionPerformed
 
-    private void menuGerenciarRotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGerenciarRotasActionPerformed
+    private void menuVisualizarRotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVisualizarRotasActionPerformed
         painelPrincipal.remove(rotas);
         painelPrincipal.add(rotas);
         
@@ -229,7 +233,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         
         rotas.setVisible(true);
         rotas.setPosicao();
-    }//GEN-LAST:event_menuGerenciarRotasActionPerformed
+    }//GEN-LAST:event_menuVisualizarRotasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,16 +278,17 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem menuBaixaRotas;
     private javax.swing.JMenu menuCadastrar;
     private javax.swing.JMenu menuCargas;
     private javax.swing.JMenu menuFaturamento;
     private javax.swing.JMenuItem menuGerenciarCargas;
-    private javax.swing.JMenuItem menuGerenciarRotas;
     private javax.swing.JMenuItem menuNFeFaturamento;
     private javax.swing.JMenu menuRotas;
     private javax.swing.JMenuItem menuTransportadorCadastrar;
     private javax.swing.JMenuItem menuVeiculosCadastrar;
     private javax.swing.JMenuItem menuVisualizarCargas;
+    private javax.swing.JMenuItem menuVisualizarRotas;
     private javax.swing.JDesktopPane painelPrincipal;
     // End of variables declaration//GEN-END:variables
 

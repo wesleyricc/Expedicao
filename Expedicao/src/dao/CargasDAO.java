@@ -32,7 +32,7 @@ public class CargasDAO {
         List<CargasGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome " +
+        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome, v.Nome 'NomeVeiculo' " +
                     "from clientes as c " +
                     "join endereco as endr " +
                     "join transportador as t " +
@@ -40,10 +40,12 @@ public class CargasDAO {
                     "join pedidos as p " +
                     "join clientes_has_pedidos as cp " +
                     "join pedidos_itens as pi " +
+                    "join veiculos as v " +
                     "where nf.idClientes = c.idClientes and " +
                     "nf.idPedidos = p.idPedidos and " +
                     "nf.idTransportador = t.idTransportador and " +
                     "endr.idEndereco = c.idEndereco and " +
+                    "nf.idVeiculo = v.idVeiculos and " +
                     "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) and " +
                     "endr.Cidade = ? AND " +
                     "t.Nome = ? and " +
@@ -62,7 +64,9 @@ public class CargasDAO {
             nfegs.setTextoCidade(rs.getString("cidade"));
             nfegs.setTextoCliente(rs.getString("nome"));
             nfegs.setTextoLogradouro(rs.getString("logradouro"));
+            nfegs.setTransportador(rs.getString("NomeTransportador"));
             nfegs.setTextoEstado(rs.getString("estado"));
+            nfegs.setVeiculo(rs.getString("NomeVeiculo"));
 
             listaNFe.add(nfegs);
         }
@@ -80,7 +84,7 @@ public class CargasDAO {
         List<CargasGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome " +
+        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome 'NomeTransportador', v.Nome 'NomeVeiculo' " +
                     "from clientes as c " +
                     "join endereco as endr " +
                     "join transportador as t " +
@@ -88,8 +92,10 @@ public class CargasDAO {
                     "join pedidos as p " +
                     "join clientes_has_pedidos as cp " +
                     "join pedidos_itens as pi " +
+                    "join veiculos as v " +
                     "where nf.idClientes = c.idClientes and " +
                     "nf.idPedidos = p.idPedidos and " +
+                    "nf.idVeiculo = v.idVeiculos and " +
                     "nf.idTransportador = t.idTransportador and " +
                     "endr.idEndereco = c.idEndereco and " +
                     "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) and " +
@@ -106,6 +112,8 @@ public class CargasDAO {
             nfegs.setTextoCliente(rs.getString("nome"));
             nfegs.setTextoLogradouro(rs.getString("logradouro"));
             nfegs.setTextoEstado(rs.getString("estado"));
+            nfegs.setTransportador(rs.getString("NomeTransportador"));
+            nfegs.setVeiculo(rs.getString("NomeVeiculo"));
 
             listaNFe.add(nfegs);
         }
@@ -253,5 +261,7 @@ public class CargasDAO {
 
         return transporte;
     }    
+    
+    
     
 }
