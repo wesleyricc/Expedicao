@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -126,42 +125,37 @@ public class rotasDAO {
         conn = Conexao.getConnection();
         String sql = "select r.idRotas, r.Cidades, r.idCargas " +
                     "from rotas as r " +
-                    "join cargas_has_nota_fiscal as cf\n" +
-                    "join nota_fiscal as nf " +
-                    "join cargas as c " +
                     "join transportador as t " +
-                    "join transportador_has_veiculos as tv " +
+                    "join cargas_has_nota_fiscal as cnf " +
                     "join veiculos as v " +
-                    "where r.idCargas = cf.idCargas and " +
-                    "cf.idNota_Fiscal = nf.idNota_Fiscal and " +
+                    "join nota_fiscal as nf " +
+                    "where v.Nome = ? and " +
+                    "t.Nome = ? and " +
+                    "r.idCargas = cnf.idCargas and " +
+                    "cnf.idNota_Fiscal = nf.idNota_Fiscal and " +
                     "nf.idTransportador = t.idTransportador and " +
-                    "nf.idVeiculo = v.idVeiculos and " +
-                    "tv.idTransportador = t.idTransportador and " +
-                    "tv.idVeiculos = v.idVeiculos and " +
-                    "v.Nome = ?";
-                
+                    "nf.idVeiculo = v.idVeiculos " +
+                    "group by idRotas";
+
         ps = conn.prepareStatement(sql);
-        ps.setString(1, t);
-        ps.setString(2, v);
+        ps.setString(1, v);
+        ps.setString(2, t);
         rs = ps.executeQuery();
 
         while (rs.next()) {
             RotasGetSet rotags = new RotasGetSet();
 
-            //nfegs.setId_Nota_Fiscal(rs.getInt("idnota_fiscal"));
-            //nfegs.setTextoCidade(rs.getString("cidade"));
-            //nfegs.setTextoCliente(rs.getString("nome"));
-            //nfegs.setTextoLogradouro(rs.getString("logradouro"));
-            //nfegs.setTransportador(rs.getString("NomeTransportador"));
-            //nfegs.setTextoEstado(rs.getString("estado"));
-            //nfegs.setVeiculo(rs.getString("NomeVeiculo"));
+            rotags.setIdRota(rs.getInt("idRotas"));
+            rotags.setListaCidadeString(rs.getString("Cidades"));
+            rotags.setIdCarga(rs.getInt("idCargas"));
 
-            //listaNFe.add(nfegs);
+            listaRota.add(rotags);
         }
         rs.close();
         conn.close();
 
         return listaRota;
+
     }
 
 }

@@ -9,9 +9,9 @@ import java.util.List;
 
 public class RotasGetSet {
 
-    Integer idCarga, idRota;
-    List<String> cidades;
-    String listaCidadeString;
+    private Integer idCarga, idRota;
+    private List<String> cidades;
+    private String listaCidadeString;
 
     public String getListaCidadeString() {
         return listaCidadeString;

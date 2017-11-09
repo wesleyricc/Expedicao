@@ -38,7 +38,8 @@ public class InternalRotas extends javax.swing.JInternalFrame {
     private DefaultTableModel modeloItensNota;
     List<NFeGetSet> NFeGS = null;
     List<TransportadorGetSet> transGS;
-    rotasDAO rotasdao = new rotasDAO();
+    private rotasDAO rotasDAO = new rotasDAO();
+    
     public InternalRotas() {
         initComponents();
 
@@ -46,7 +47,7 @@ public class InternalRotas extends javax.swing.JInternalFrame {
 
     public void setarCampos() throws SQLException {
 
-        Vector itensTransportador = rotasdao.carregaTransportador();
+        Vector itensTransportador = rotasDAO.carregaTransportador();
         //List<RotasGetSet> rotas = rotasdao.listarCargasLiberadas(comboTransportador.getSelectedItem().toString());
         
         DefaultComboBoxModel modeloTransportador = new DefaultComboBoxModel(itensTransportador);
@@ -78,17 +79,16 @@ public class InternalRotas extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         comboVeiculo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         botaoVisualizar = new javax.swing.JButton();
 
         setClosable(true);
 
         tabelaRotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+
             },
             new String [] {
-                "Identificação", "Cidades"
+                "Id Carga", "Cidades"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -125,8 +125,6 @@ public class InternalRotas extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Veículo");
 
-        jLabel3.setText("Carga");
-
         botaoVisualizar.setText("Visualizar");
         botaoVisualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,22 +137,23 @@ public class InternalRotas extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboTransportador, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(botaoVisualizar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboTransportador, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoVisualizar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,13 +168,12 @@ public class InternalRotas extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(comboVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(botaoVisualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(69, 69, 69)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -191,7 +189,7 @@ public class InternalRotas extends javax.swing.JInternalFrame {
 
         Vector itensVeiculos = null;
         try {
-            itensVeiculos = rotasdao.carregaVeiculos(comboTransportador.getSelectedItem().toString());
+            itensVeiculos = rotasDAO.carregaVeiculos(comboTransportador.getSelectedItem().toString());
         } catch (SQLException ex) {
             Logger.getLogger(InternalRotas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -203,22 +201,25 @@ public class InternalRotas extends javax.swing.JInternalFrame {
 
     private void botaoVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVisualizarActionPerformed
         
+        
+        try {
             String transporte = (String) comboTransportador.getSelectedItem();
             String veiculo = (String) comboVeiculo.getSelectedItem();
 
             List<RotasGetSet> listaRotas = rotasDAO.getRotas(transporte, veiculo);
-       
-   
+           
             modeloRotas = (DefaultTableModel) tabelaRotas.getModel();
 
             for (int i = 0; i < listaRotas.size(); i++) {
-
-
-                    System.out.println("é diferente!");
-                    modeloRotas.addRow(new Object[]{listaRotas.get(i).getIdCarga(), listaRotas.get(i).getListaCidadeString(), listaRotas.get(i).getIdRota()});
+     
+                modeloRotas.addRow(new Object[]{listaRotas.get(i).getIdCarga(), listaRotas.get(i).getListaCidadeString(), listaRotas.get(i).getIdRota()});
                 
-
+                
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(InternalRotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
     }//GEN-LAST:event_botaoVisualizarActionPerformed
 
@@ -229,7 +230,6 @@ public class InternalRotas extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> comboVeiculo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaRotas;
     // End of variables declaration//GEN-END:variables
