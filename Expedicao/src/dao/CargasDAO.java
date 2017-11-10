@@ -22,7 +22,6 @@ import java.util.logging.Logger;
  */
 public class CargasDAO {
 
-    
     public List<CargasGetSet> getNFe(String t, String c) throws SQLException {
         ResultSet rs = null;
         Connection conn = null;
@@ -31,26 +30,26 @@ public class CargasDAO {
         List<CargasGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome 'NomeTransportador', v.Nome 'NomeVeiculo' " +
-                    "from clientes as c " +
-                    "join endereco as endr " +
-                    "join transportador as t " +
-                    "join nota_fiscal as nf " +
-                    "join pedidos as p " +
-                    "join clientes_has_pedidos as cp " +
-                    "join pedidos_itens as pi " +
-                    "join veiculos as v " +
-                    "where nf.idClientes = c.idClientes and " +
-                    "nf.idPedidos = p.idPedidos and " +
-                    "nf.idTransportador = t.idTransportador and " +
-                    "endr.idEndereco = c.idEndereco and " +
-                    "nf.idVeiculo = v.idVeiculos and " +
-                    "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) and " +
-                    "endr.Cidade = ? AND " +
-                    "t.Nome = ? and " +
-                    "nf.idClientes = c.idClientes and cp.idPedidos = p.idPedidos and " +
-                    "cp.idPedidos_Itens = pi.idPedidos_Itens";
-                //+ "GROUP by nf.idNota_Fiscal";
+        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome 'NomeTransportador', v.Nome 'NomeVeiculo' "
+                + "from clientes as c "
+                + "join endereco as endr "
+                + "join transportador as t "
+                + "join nota_fiscal as nf "
+                + "join pedidos as p "
+                + "join clientes_has_pedidos as cp "
+                + "join pedidos_itens as pi "
+                + "join veiculos as v "
+                + "where nf.idClientes = c.idClientes and "
+                + "nf.idPedidos = p.idPedidos and "
+                + "nf.idTransportador = t.idTransportador and "
+                + "endr.idEndereco = c.idEndereco and "
+                + "nf.idVeiculo = v.idVeiculos and "
+                + "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) and "
+                + "endr.Cidade = ? AND "
+                + "t.Nome = ? and "
+                + "nf.idClientes = c.idClientes and cp.idPedidos = p.idPedidos and "
+                + "cp.idPedidos_Itens = pi.idPedidos_Itens";
+        //+ "GROUP by nf.idNota_Fiscal";
         ps = conn.prepareStatement(sql);
         ps.setString(1, c);
         ps.setString(2, t);
@@ -83,23 +82,23 @@ public class CargasDAO {
         List<CargasGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome 'NomeTransportador', v.Nome 'NomeVeiculo' " +
-                    "from clientes as c " +
-                    "join endereco as endr " +
-                    "join transportador as t " +
-                    "join nota_fiscal as nf " +
-                    "join pedidos as p " +
-                    "join clientes_has_pedidos as cp " +
-                    "join pedidos_itens as pi " +
-                    "join veiculos as v " +
-                    "where nf.idClientes = c.idClientes and " +
-                    "nf.idPedidos = p.idPedidos and " +
-                    "nf.idVeiculo = v.idVeiculos and " +
-                    "nf.idTransportador = t.idTransportador and " +
-                    "endr.idEndereco = c.idEndereco and " +
-                    "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) and " +
-                    "nf.idClientes = c.idClientes and cp.idPedidos = p.idPedidos and " +
-                    "cp.idPedidos_Itens = pi.idPedidos_Itens";
+        String sql = "SELECT nf.idNota_Fiscal, c.Nome, endr.Logradouro, endr.Cidade, endr.Estado, t.Nome 'NomeTransportador', v.Nome 'NomeVeiculo' "
+                + "from clientes as c "
+                + "join endereco as endr "
+                + "join transportador as t "
+                + "join nota_fiscal as nf "
+                + "join pedidos as p "
+                + "join clientes_has_pedidos as cp "
+                + "join pedidos_itens as pi "
+                + "join veiculos as v "
+                + "where nf.idClientes = c.idClientes and "
+                + "nf.idPedidos = p.idPedidos and "
+                + "nf.idVeiculo = v.idVeiculos and "
+                + "nf.idTransportador = t.idTransportador and "
+                + "endr.idEndereco = c.idEndereco and "
+                + "nf.idNota_Fiscal not in (select cnf.idNota_Fiscal from cargas_has_nota_fiscal as cnf) and "
+                + "nf.idClientes = c.idClientes and cp.idPedidos = p.idPedidos and "
+                + "cp.idPedidos_Itens = pi.idPedidos_Itens";
         ps = conn.prepareStatement(sql);
         rs = ps.executeQuery();
 
@@ -121,9 +120,7 @@ public class CargasDAO {
 
         return listaNFe;
     }
-    
-    
-    
+
     public void insertCargas(CargasGetSet carga) throws SQLException {
 
         Connection conn = null;
@@ -151,10 +148,9 @@ public class CargasDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         Integer idCarga = numCarga() - 1;
-   
 
         try {
-            
+
             conn = Conexao.getConnection();
             String sql = "insert into cargas_has_nota_fiscal values (?, ?)";
             ps = conn.prepareStatement(sql);
@@ -259,8 +255,51 @@ public class CargasDAO {
         conn.close();
 
         return transporte;
-    }    
-    
-    
-    
+    }
+
+    public List<CargasGetSet> getCargas() throws SQLException {
+
+        ResultSet rs = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        List<CargasGetSet> listaCargas = new ArrayList<>();
+
+        conn = Conexao.getConnection();
+        String sql = "select carg.idCargas, nf.idNota_Fiscal, c.Nome, pa.Descricao, endr.Cidade "
+                + "from cargas as carg "
+                + "join cargas_has_nota_fiscal as cnf "
+                + "join nota_fiscal as nf "
+                + "join clientes as c "
+                + "join endereco as endr "
+                + "join pedidos_itens as pi "
+                + "join produto_acabado as pa "
+                + "where cnf.idNota_Fiscal = nf.idNota_Fiscal and "
+                + "carg.idCargas = cnf.idCargas and "
+                + "nf.idClientes = c.idClientes and "
+                + "pi.idPedidos_Itens = nf.idPedidos_Itens and "
+                + "pi.idProduto_Acabado = pa.idProduto_Acabado and "
+                + "c.idEndereco = endr.idEndereco";
+
+        ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            CargasGetSet cargags = new CargasGetSet();
+
+            cargags.setIdCarga(rs.getInt("idCargas"));
+            cargags.setId_Nota_Fiscal(rs.getInt("idNota_Fiscal"));
+            cargags.setCliente(rs.getString("Nome"));
+            cargags.setDescPedido(rs.getString("Descricao"));
+            cargags.setCidade(rs.getString("Cidade"));
+ 
+            listaCargas.add(cargags);
+        }
+        rs.close();
+        conn.close();
+
+        return listaCargas;
+
+    }
+
 }

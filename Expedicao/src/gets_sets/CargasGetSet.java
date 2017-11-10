@@ -22,6 +22,15 @@ public class CargasGetSet {
     private String textoLogradouro;
     private String textoCidade;
     private String textoEstado;
+    private String descPedido;
+
+    public String getDescPedido() {
+        return descPedido;
+    }
+
+    public void setDescPedido(String descPedido) {
+        this.descPedido = descPedido;
+    }   
 
     public String getTransportador() {
         return Transportador;

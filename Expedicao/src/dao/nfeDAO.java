@@ -47,6 +47,8 @@ public class nfeDAO {
                     "cp.idPedidos = p.idPedidos and " +
                     "cp.idPedidos_Itens = pi.idPedidos_Itens and " +
                     "pi.idProduto_Acabado = pa.idProduto_Acabado and " +
+                    "nf.idClientes = c.idClientes and " +
+                    "nf.idPedidos = cp.idPedidos and " +
                     "c.Nome like ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, "%" + cliente + "%");

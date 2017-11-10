@@ -84,6 +84,7 @@ public class InternalRotas extends javax.swing.JInternalFrame {
         botaoCancelar = new javax.swing.JButton();
 
         setClosable(true);
+        setTitle("Gerenciar Rotas");
 
         tabelaRotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -134,7 +135,7 @@ public class InternalRotas extends javax.swing.JInternalFrame {
             }
         });
 
-        botaoEncerrar.setText("Encerrar Carga");
+        botaoEncerrar.setText("Encerrar Rota");
         botaoEncerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoEncerrarActionPerformed(evt);

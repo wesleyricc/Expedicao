@@ -19,12 +19,13 @@ public class FramePrincipal extends javax.swing.JFrame {
      * Creates new form FramePrincipal
      */
     public FramePrincipal() throws SQLException {
-        this.cargas = new InternalCargas();
+        //this.cargas = new InternalCargas();
         initComponents();
     }
 
     private final InternalPedido pedido = new InternalPedido();
-    private final InternalCargas cargas;
+    private final InternalCargas cargas = new InternalCargas();
+    private final InternalVisualizarCargas vizucargas = new InternalVisualizarCargas();
     private final InternalCadastroTransportador cadastrotransp = new InternalCadastroTransportador();
     private final InternalCadastroVeículos cadastroveiculos = new InternalCadastroVeículos();
     private final InternalNotaFiscal notafiscal = new InternalNotaFiscal();
@@ -125,6 +126,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         menuCargas.add(menuGerenciarCargas);
 
         menuVisualizarCargas.setText("Visualizar");
+        menuVisualizarCargas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuVisualizarCargasActionPerformed(evt);
+            }
+        });
         menuCargas.add(menuVisualizarCargas);
 
         barraMenu.add(menuCargas);
@@ -230,6 +236,22 @@ public class FramePrincipal extends javax.swing.JFrame {
         rotas.setVisible(true);
         rotas.setPosicao();
     }//GEN-LAST:event_menuVisualizarRotasActionPerformed
+
+    private void menuVisualizarCargasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVisualizarCargasActionPerformed
+        
+        painelPrincipal.remove(vizucargas);
+        painelPrincipal.add(vizucargas);
+        
+        try {
+            vizucargas.setarCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        vizucargas.setVisible(true);
+        vizucargas.setPosicao();
+        
+    }//GEN-LAST:event_menuVisualizarCargasActionPerformed
 
     /**
      * @param args the command line arguments
