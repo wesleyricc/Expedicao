@@ -211,9 +211,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         try {
             notafiscal.setarCampos();
+            //notafiscal.setSize();
         } catch (SQLException ex) {
             Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         
         
 
