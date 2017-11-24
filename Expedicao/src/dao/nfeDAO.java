@@ -35,16 +35,18 @@ public class nfeDAO {
         List<NFeGetSet> listaNFe = new ArrayList<>();
 
         conn = Conexao.getConnection();
-        String sql = "select c.idClientes, c.Nome, p.idPedidos, pi.idPedidos_Itens, pa.Descricao, pi.Quantidade, pi.Valor " +
-                    "from clientes as c " +
-                    "join pedidos as p " +
-                    "join pedidos_itens as pi " +
-                    "join produto_acabado as pa " +
-                    "join clientes_has_pedidos as cp " +
-                    "where cp.idClientes = c.idClientes and " +
-                    "cp.idPedidos = p.idPedidos and " +
-                    "cp.idPedidos_Itens = pi.idPedidos_Itens and " +
-                    "pi.idProduto_Acabado = pa.idProduto_Acabado and " +
+        String sql = "select c.idClientes, c.Nome, endr.Estado, p.idPedidos, pi.idPedidos_Itens, pa.Descricao, pi.Quantidade, pi.Valor \n" +
+                    "from clientes as c \n" +
+                    "join pedidos as p \n" +
+                    "join pedidos_itens as pi \n" +
+                    "join produto_acabado as pa \n" +
+                    "join clientes_has_pedidos as cp \n" +
+                    "join endereco as endr\n" +
+                    "where cp.idClientes = c.idClientes and\n" +
+                    "cp.idPedidos = p.idPedidos and\n" +
+                    "endr.idEndereco = c.idEndereco and\n" +
+                    "cp.idPedidos_Itens = pi.idPedidos_Itens and \n" +
+                    "pi.idProduto_Acabado = pa.idProduto_Acabado and \n" +
                     "c.Nome like ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, "%" + cliente + "%");
@@ -55,6 +57,7 @@ public class nfeDAO {
 
             nfegs.setIdCliente(rs.getInt("idClientes"));
             nfegs.setNomeCliente(rs.getString("nome"));
+            nfegs.setEstadoCliente(rs.getString("Estado"));
             nfegs.setIdPedido(rs.getInt("idPedidos"));
             nfegs.setIdPedidoItens(rs.getInt("idPedidos_Itens"));
             nfegs.setDescpedido(rs.getString("Descricao"));

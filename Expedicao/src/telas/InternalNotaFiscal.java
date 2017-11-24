@@ -104,6 +104,10 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         textoBaseICMSST = new javax.swing.JTextField();
         textoData = new javax.swing.JFormattedTextField();
         botaoCancelar = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        textoICMSSC = new javax.swing.JTextField();
+        textoEstado = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Nota Fiscal Elêtronica");
@@ -314,6 +318,23 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel21.setText("Valor do ICMS SC:");
+
+        textoICMSSC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoICMSSCKeyTyped(evt);
+            }
+        });
+
+        textoEstado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        textoEstado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textoEstadoKeyTyped(evt);
+            }
+        });
+
+        jLabel22.setText("Estado:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -339,20 +360,6 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                         .addGap(26, 26, 26)
                         .addComponent(textoBaseICMS, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(textoValorNota, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel16)
-                        .addGap(26, 26, 26)
-                        .addComponent(textoICMSSub, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel15)
-                        .addGap(18, 18, 18)
-                        .addComponent(textoValorICMS, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(491, 491, 491)
                         .addComponent(jLabel18)
                         .addGap(10, 10, 10)
@@ -364,7 +371,11 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                         .addComponent(textoNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(botaoPesquisar)
-                        .addGap(177, 177, 177)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel22)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)
                         .addComponent(jLabel20)
                         .addGap(10, 10, 10)
                         .addComponent(comboVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -382,7 +393,26 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                         .addGap(31, 31, 31)
                         .addComponent(botaoLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
-                        .addComponent(botaoCancelar)))
+                        .addComponent(botaoCancelar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(46, 46, 46)
+                            .addComponent(jLabel15)
+                            .addGap(18, 18, 18)
+                            .addComponent(textoValorICMS, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel21)
+                            .addGap(26, 26, 26)
+                            .addComponent(textoICMSSC, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(63, 63, 63)
+                            .addComponent(jLabel11)
+                            .addGap(18, 18, 18)
+                            .addComponent(textoValorNota, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(60, 60, 60)
+                            .addComponent(jLabel16)
+                            .addGap(26, 26, 26)
+                            .addComponent(textoICMSSub, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
@@ -421,13 +451,20 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(textoICMSSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel15))
-                    .addComponent(textoValorICMS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel15))
+                            .addComponent(textoValorICMS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(textoICMSSC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
@@ -441,7 +478,10 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(textoNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(botaoPesquisar)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoPesquisar)
+                        .addComponent(jLabel22)
+                        .addComponent(textoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jLabel20))
@@ -479,6 +519,8 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
 
     private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
 
+        
+        
         textoData.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
         String nomeCliente = textoNomeCliente.getText();
 
@@ -489,9 +531,12 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         }
 
         textoNomeCliente.setText(NFeGS.get(0).getNomeCliente());
-
+        textoEstado.setText(NFeGS.get(0).getEstadoCliente());
+        
         modeloItensNota = (DefaultTableModel) tabelaNotas.getModel();
 
+        modeloItensNota.setNumRows(0);
+        
         for (int i = 0; i < NFeGS.size(); i++) {
 
             modeloItensNota.addRow(new Object[]{NFeGS.get(i).getIdPedido(), NFeGS.get(i).getDescpedido(), NFeGS.get(i).getQuantidade()});
@@ -669,11 +714,19 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         textoValorNota.setText(NFeGS.get(linha).getValor());
         float valor = Float.parseFloat(textoValorNota.getText());
         textoBaseICMS.setText(valor + "");
-        float valorICMS = valor * 17 / 100;
-
+        float valorICMS = valor * 17 / 100;               
+                        
         textoValorICMS.setText(valorICMS + "");
         textoBaseICMSST.setText(0 + "");
         textoICMSSub.setText(0 + "");
+        
+          if(NFeGS.get(linha).getEstadoCliente().equals("SC")){
+            textoICMSSC.setEnabled(true);
+            textoICMSSC.setText(textoValorICMS.getText());  
+        }else{
+            textoICMSSC.setText("");
+            textoICMSSC.setEnabled(false);
+        }
 
 
     }//GEN-LAST:event_tabelaNotasMouseClicked
@@ -728,6 +781,14 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textoBaseICMSActionPerformed
 
+    private void textoICMSSCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoICMSSCKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoICMSSCKeyTyped
+
+    private void textoEstadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoEstadoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoEstadoKeyTyped
+
     public void LimparCampos() {
 
         textoidNota.setText("");
@@ -758,11 +819,15 @@ public class InternalNotaFiscal extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaNotas;
     private javax.swing.JTextField textoBaseICMS;
     private javax.swing.JTextField textoBaseICMSST;
     private javax.swing.JFormattedTextField textoData;
+    private javax.swing.JTextField textoEstado;
+    private javax.swing.JTextField textoICMSSC;
     private javax.swing.JTextField textoICMSSub;
     private javax.swing.JTextField textoNomeCliente;
     private javax.swing.JTextField textoOBS;
